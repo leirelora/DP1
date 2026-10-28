@@ -69,7 +69,6 @@
       margin-bottom: 20px;
     }
 
-    /* Pantalla d'Inici */
     .mode-selection p {
       color: var(--text-muted);
       font-size: 0.95rem;
@@ -116,7 +115,6 @@
       color: #ffffff;
     }
 
-    /* Mètriques */
     .dashboard {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -145,7 +143,6 @@
       color: #f0f6fc;
     }
 
-    /* Qüestionari */
     .progress-bar {
       height: 4px;
       background: var(--border);
@@ -198,7 +195,6 @@
       color: #f85149 !important;
     }
 
-    /* Resultats finals */
     .results-card {
       text-align: center;
     }
@@ -222,9 +218,6 @@
       .dashboard {
         grid-template-columns: repeat(3, 1fr);
       }
-      .metric-box:nth-child(4), .metric-box:nth-child(5) {
-        grid-column: span 1;
-      }
     }
   </style>
 </head>
@@ -236,68 +229,7 @@
       <h1>Qüestionari de preparació</h1>
     </header>
 
-    <!-- Pantalla d'Inici -->
     <div id="start-screen" class="card mode-selection">
-      <p>Selecciona el nombre de preguntes per començar el test. Les preguntes i opcions es barregen aleatòriament.</p>
+      <p>Selecciona el nombre de preguntes per començar el test.</p>
       <div class="btn-grid">
-        <button class="btn" onclick="iniciarTest(10)">10 Preguntes</button>
-        <button class="btn" onclick="iniciarTest(25)">25 Preguntes</button>
-        <button class="btn" onclick="iniciarTest(50)">50 Preguntes</button>
-        <button class="btn" onclick="iniciarTest(100)">100 Preguntes</button>
-        <button class="btn btn-full" onclick="iniciarTest('totes')">Totes les preguntes</button>
-      </div>
-    </div>
-
-    <!-- Pantalla de Joc -->
-    <div id="quiz-screen" class="hidden">
-      <div class="dashboard">
-        <div class="metric-box">
-          <div class="metric-label">Correctes</div>
-          <div id="m-correctes" class="metric-value">0</div>
-        </div>
-        <div class="metric-box">
-          <div class="metric-label">Incorrectes</div>
-          <div id="m-incorrectes" class="metric-value">0</div>
-        </div>
-        <div class="metric-box">
-          <div class="metric-label">Restants</div>
-          <div id="m-restants" class="metric-value">0</div>
-        </div>
-        <div class="metric-box">
-          <div class="metric-label">Encert %</div>
-          <div id="m-encert" class="metric-value">—</div>
-        </div>
-        <div class="metric-box">
-          <div class="metric-label">Nota /10</div>
-          <div id="m-nota" class="metric-value">—</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="progress-bar">
-          <div id="progress-fill" class="progress-fill"></div>
-        </div>
-        <div id="q-header" class="question-header">Pregunta 0 / 0</div>
-        <div id="q-title" class="question-title">Carregant...</div>
-        <div id="options-container" class="options-list"></div>
-      </div>
-    </div>
-
-    <!-- Pantalla de Resultats -->
-    <div id="results-screen" class="card results-card hidden">
-      <h2>Sessió Finalitzada</h2>
-      <div class="score-display" id="final-score">0.0</div>
-      <p id="final-stats" style="color: var(--text-muted); margin-bottom: 20px;"></p>
-      <button class="btn btn-full" onclick="tornarAInici()">Tornar a començar</button>
-    </div>
-  </div>
-
-  <script>
-    const bancPreguntes = [
-      {
-        "pregunta": "En quin període aproximat se situen els primers envasos pres directe de la natura com closques, carbasses o cocos?",
-        "opcions": ["1800 d.C. – 1900 d.C.", "1.000 a.C. – 500 d.C.", "500 a.C. – 100 a.C.", "8.000 a.C. – 1.500 a.C."],
-        "correcta": 3
-      },
-      {
-        "pregunta": "Quan apareixen els primers envasos de fusta imitant contenidors naturals segons la cronologia històrica
+        <button class="btn" onclick="iniciarTest(10)">10 Preguntes
