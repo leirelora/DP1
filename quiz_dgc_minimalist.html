@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ca" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disseny Gràfic i Comunicació — Qüestionari</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Inter & JetBrains Mono Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            app: {
+              bg: '#0d1117',
+              card: '#161b22',
+              border: '#30363d',
+              borderHover: '#8b949e',
+              subtle: '#21262d',
+              text: '#c9d1d9',
+              muted: '#8b949e',
+              accent: '#388bfd',
+              accentHover: '#1f6feb',
+              success: '#2ea043',
+              danger: '#f85149',
+              warning: '#d29922'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0d1117;
+      color: #c9d1d9;
+      -webkit-font-smoothing: antialiased;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0d1117;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #30363d;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-blue-500/30 selection:text-white">
+
+  <!-- TOP HEADER -->
+  <header class="border-b border-app-border/60 bg-app-bg/80 backdrop-blur-md sticky top-0 z-30">
+    <div class="max-w-4xl mx-auto px-4 py-3.5 flex items-center justify-between">
+      <div class="cursor-pointer flex items-center gap-2.5" onclick="goHome()">
+        <div class="w-2 h-2 rounded-full bg-app-accent"></div>
+        <div>
+          <h1 class="text-sm font-semibold text-white tracking-tight">Disseny Gràfic i Comunicació</h1>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="openEditorModal()" class="flex items-center gap-2 px-3 py-1.5 text-xs font-medium bg-app-subtle hover:bg-app-card text-app-text rounded-md border border-app-border transition-colors">
+          <i class="fa-solid fa-code text-app-muted text-[11px]"></i>
+          <span>Carregar / Editar Teoria</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-3xl mx-auto px-4 py-10 flex-1 w-full flex flex-col justify-center">
+
+    <!-- 1. HOME / MODE SELECTOR SCREEN -->
+    <div id="homeScreen" class="space-y-8 w-full max-w-xl mx-auto">
+      <div class="space-y-2 text-center">
+        <h2 class="text-2xl font-bold text-white tracking-tight">Qüestionari de preparació</h2>
+        <p class="text-xs text-app-muted max-w-sm mx-auto">
+          Selecciona la quantitat de preguntes per iniciar la sessió d'estudi.
+        </p>
+      </div>
+
+      <!-- Mode selection buttons -->
+      <div class="space-y-2">
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="startQuiz(10)" class="p-3.5 bg-app-card hover:bg-app-subtle border border-app-border hover:border-app-borderHover rounded-lg transition-all text-left flex items-center justify-between group">
+            <span class="text-xs font-semibold text-white">10 Preguntes</span>
+            <span class="text-[11px] font-mono text-app-muted group-hover:text-app-text transition-colors">Ràpid</span>
+          </button>
+
+          <button onclick="startQuiz(25)" class="p-3.5 bg-app-card hover:bg-app-subtle border border-app-border hover:border-app-borderHover rounded-lg transition-all text-left flex items-center justify-between group">
+            <span class="text-xs font-semibold text-white">25 Preguntes</span>
+            <span class="text-[11px] font-mono text-app-muted group-hover:text-app-text transition-colors">Estàndard</span>
+          </button>
+
+          <button onclick="startQuiz(50)" class="p-3.5 bg-app-card hover:bg-app-subtle border border-app-border hover:border-app-borderHover rounded-lg transition-all text-left flex items-center justify-between group">
+            <span class="text-xs font-semibold text-white">50 Preguntes</span>
+            <span class="text-[11px] font-mono text-app-muted group-hover:text-app-text transition-colors">Aprofundit</span>
+          </button>
+
+          <button onclick="startQuiz(100)" class="p-3.5 bg-app-card hover:bg-app-subtle border border-app-border hover:border-app-borderHover rounded-lg transition-all text-left flex items-center justify-between group">
+            <span class="text-xs font-semibold text-white">100 Preguntes</span>
+            <span class="text-[11px] font-mono text-app-muted group-hover:text-app-text transition-colors">Intensiu</span>
+          </button>
+        </div>
+
+        <button onclick="startQuiz('all')" class="w-full p-3.5 bg-app-card hover:bg-app-subtle border border-app-border hover:border-app-borderHover rounded-lg transition-all text-left flex items-center justify-between group">
+          <span class="text-xs font-semibold text-white">Totes les preguntes</span>
+          <span id="allCountLabel" class="text-[11px] font-mono text-app-accent">-- preguntes</span>
+        </button>
+      </div>
+
+      <!-- Quick Upload Hint -->
+      <div class="pt-2 text-center">
+        <button onclick="openEditorModal()" class="text-xs text-app-muted hover:text-app-text transition-colors inline-flex items-center gap-1.5">
+          <i class="fa-solid fa-file-arrow-up text-[11px]"></i>
+          <span>Vols carregar un fitxer JSON de teoria propi?</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. ACTIVE QUIZZ SCREEN -->
+    <div id="quizScreen" class="hidden space-y-6 w-full">
+      
+      <!-- Minimalist Real-Time Stats Bar -->
+      <div class="grid grid-cols-5 gap-2 bg-app-card border border-app-border p-3 rounded-lg text-center font-mono">
+        <div>
+          <span class="block text-[10px] uppercase text-app-muted tracking-wider">Correctes</span>
+          <span id="statCorrect" class="text-sm font-semibold text-app-success">0</span>
+        </div>
+        <div>
+          <span class="block text-[10px] uppercase text-app-muted tracking-wider">Incorrectes</span>
+          <span id="statIncorrect" class="text-sm font-semibold text-app-danger">0</span>
+        </div>
+        <div>
+          <span class="block text-[10px] uppercase text-app-muted tracking-wider">Restants</span>
+          <span id="statRemaining" class="text-sm font-semibold text-app-text">0</span>
+        </div>
+        <div>
+          <span class="block text-[10px] uppercase text-app-muted tracking-wider">Encert</span>
+          <span id="statAccuracy" class="text-sm font-semibold text-app-warning">0%</span>
+        </div>
+        <div>
+          <span class="block text-[10px] uppercase text-app-muted tracking-wider">Nota /10</span>
+          <span id="statScore10" class="text-sm font-semibold text-app-accent">0.0</span>
+        </div>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="space-y-1.5">
+        <div class="flex justify-between items-center text-[11px] font-mono text-app-muted">
+          <span id="progressText">01 / 10</span>
+          <span id="progressPercent">0%</span>
+        </div>
+        <div class="w-full bg-app-subtle rounded-full h-1 overflow-hidden">
+          <div id="progressBar" class="bg-app-accent h-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <div class="bg-app-card border border-app-border rounded-xl p-6 space-y-6">
+        <h3 id="questionText" class="text-base font-medium text-white leading-snug">
+          Carregant la pregunta...
+        </h3>
+
+        <!-- Options list -->
+        <div id="optionsContainer" class="space-y-2">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- Feedback alert -->
+        <div id="feedbackBox" class="hidden p-3.5 rounded-lg border text-xs font-medium">
+          <div class="flex items-center gap-2">
+            <i id="feedbackIcon" class="fa-solid"></i>
+            <span id="feedbackTitle" class="font-semibold"></span>
+          </div>
+          <p id="feedbackText" class="text-app-muted mt-1 font-normal"></p>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center justify-between pt-1">
+        <button onclick="goHome()" class="text-xs text-app-muted hover:text-white transition-colors">
+          <i class="fa-solid fa-arrow-left mr-1"></i> Sortir
+        </button>
+
+        <button id="nextBtn" onclick="nextQuestion()" disabled class="opacity-40 cursor-not-allowed px-4 py-2 bg-app-accent hover:bg-app-accentHover text-white font-medium text-xs rounded-md transition-all flex items-center gap-2">
+          <span>Següent</span>
+          <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- 3. SUMMARY SCREEN -->
+    <div id="summaryScreen" class="hidden max-w-md mx-auto w-full space-y-6">
+      <div class="bg-app-card border border-app-border rounded-xl p-8 text-center space-y-6">
+        
+        <div class="space-y-1">
+          <span class="text-xs uppercase font-mono text-app-muted tracking-wider">Resultat final</span>
+          <div id="finalScore10" class="text-4xl font-bold text-white tracking-tight my-2">0.0 / 10</div>
+          <p id="finalMessage" class="text-xs text-app-muted"></p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 py-2 border-y border-app-border font-mono text-xs">
+          <div class="p-2">
+            <span class="text-[10px] text-app-muted uppercase block">Correctes</span>
+            <span id="finalCorrect" class="font-semibold text-app-success">0</span>
+          </div>
+          <div class="p-2">
+            <span class="text-[10px] text-app-muted uppercase block">Incorrectes</span>
+            <span id="finalIncorrect" class="font-semibold text-app-danger">0</span>
+          </div>
+          <div class="p-2">
+            <span class="text-[10px] text-app-muted uppercase block">Encert</span>
+            <span id="finalAccuracy" class="font-semibold text-app-warning">0%</span>
+          </div>
+        </div>
+
+        <button onclick="goHome()" class="w-full py-2.5 bg-app-accent hover:bg-app-accentHover text-white text-xs font-medium rounded-md transition-colors">
+          Tornar al menú principal
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 4. JSON EDITOR & FILE IMPORT MODAL -->
+  <div id="editorModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-app-card border border-app-border rounded-xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="px-5 py-3.5 border-b border-app-border flex items-center justify-between">
+        <h3 class="text-xs font-semibold text-white tracking-wide">Gestor de Teoria (JSON)</h3>
+        <button onclick="closeEditorModal()" class="text-app-muted hover:text-white p-1">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-5 space-y-4 flex-1 overflow-y-auto custom-scrollbar">
+        
+        <!-- Local File Import Bar -->
+        <div class="p-3 bg-app-subtle border border-app-border rounded-lg flex items-center justify-between text-xs">
+          <span class="text-app-muted">Carregar fitxer JSON local:</span>
+          <input type="file" id="fileInput" accept=".json" onchange="handleFileUpload(event)" class="hidden">
+          <button onclick="document.getElementById('fileInput').click()" class="px-3 py-1 bg-app-card hover:bg-app-border border border-app-border text-white text-xs rounded transition-colors">
+            <i class="fa-solid fa-upload mr-1 text-[10px]"></i> Seleccionar Fitxer
+          </button>
+        </div>
+
+        <p class="text-[11px] text-app-muted">
+          Pots editar el JSON manualment a sota. L'índex <code class="bg-app-subtle px-1 rounded text-app-text">correcta</code> indica la posició de la resposta vàlida (comença a 0).
+        </p>
+
+        <textarea id="jsonInput" rows="11" class="w-full bg-app-bg text-app-text font-mono text-xs p-3.5 rounded-lg border border-app-border focus:outline-none focus:border-app-accent transition-colors" spellcheck="false"></textarea>
+
+        <div id="jsonError" class="hidden p-3 bg-app-danger/10 border border-app-danger/30 rounded-lg text-app-danger text-xs">
+          <span id="jsonErrorText">Format JSON invàlid.</span>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-5 py-3 border-t border-app-border flex items-center justify-between bg-app-bg/50">
+        <button onclick="loadDefaultQuestions()" class="text-xs text-app-muted hover:text-app-warning transition-colors">
+          Restablir teoria per defecte
+        </button>
+        <div class="flex items-center gap-2">
+          <button onclick="exportJSON()" class="px-3 py-1.5 border border-app-border hover:bg-app-subtle text-app-text text-xs rounded transition-colors">
+            Descarregar JSON
+          </button>
+          <button onclick="saveCustomQuestions()" class="px-3.5 py-1.5 bg-app-accent hover:bg-app-accentHover text-white text-xs font-medium rounded transition-colors">
+            Guardar Canvis
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-app-border/40 py-3 text-center text-[11px] text-app-muted">
+    <p>Disseny Gràfic i Comunicació — Plataforma de Repàs</p>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // DEFAULT THEORY QUESTION BANK
+    const DEFAULT_QUESTIONS = [
+      {
+        pregunta: "Quina és la funció principal del contrast en una composició visual?",
+        opcions: [
+          "Augmentar la quantitat de colors de la pàgina.",
+          "Establir una jerarquia visual clara i dirigir l'atenció de l'observador.",
+          "Omplir els espais buits del disseny.",
+          "Reduir la resolució de la imatge."
+        ],
+        correcta: 1
+      },
+      {
+        pregunta: "Quin model de color s'utilitza principalment per a sistemes d'impressió?",
+        opcions: ["RGB", "HSB", "CMYK", "HEX"],
+        correcta: 2
+      },
+      {
+        pregunta: "Què representa l'Espai En Blanc o Espai Negatiu?",
+        opcions: [
+          "Un error involuntari de maquetació.",
+          "L'àrea no ocupada que permet respirar a la composició i organitzar els elements.",
+          "El color de fons del paper d'impremta.",
+          "Una imatge sense dades."
+        ],
+        correcta: 1
+      },
+      {
+        pregunta: "Quina és la principal diferència entre imatges vectorials i de mapa de bits?",
+        opcions: [
+          "Les vectorials es basen en fórmules matemàtiques i són escalables sense perdre qualitat.",
+          "Les de mapa de bits tenen millor resolució infinitament.",
+          "Les vectorials no es poden imprimir mai.",
+          "No hi ha cap diferència tècnica."
+        ],
+        correcta: 0
+      },
+      {
+        pregunta: "Què és la tipografia Serif?",
+        opcions: [
+          "Un estil de lletra sense remats als extrems dels traços.",
+          "Un tipus de lletra amb petits ornaments o remats als extrems dels traços.",
+          "Una font utilitzada exclusivament per a codi de programació.",
+          "Una lletra cal·ligràfica manual."
+        ],
+        correcta: 1
+      },
+      {
+        pregunta: "Quin format d'imatge és ideal per a web quan es requereix transparència del canal Alfa?",
+        opcions: ["JPG", "PNG", "BMP", "TIFF"],
+        correcta: 1
+      },
+      {
+        pregunta: "En composició, quina és la regla dels terços?",
+        opcions: [
+          "Dividir el disseny en 3 seccions de colors diferents.",
+          "Dividir la imatge en una retícula de 3x3 per situar els punts d'interès en les interseccions.",
+          "Utilitzar només 3 tipografies per projecte.",
+          "Comprimir la imatge un 33%."
+        ],
+        correcta: 1
+      },
+      {
+        pregunta: "Quina és la resolució estàndard recomanada per a la impressió d'alta qualitat?",
+        opcions: ["72 DPI", "150 DPI", "300 DPI", "1200 DPI"],
+        correcta: 2
+      },
+      {
+        pregunta: "Què ajusta el 'Kerning' en composició tipogràfica?",
+        opcions: [
+          "L'espaiat vertical entre línies de text.",
+          "L'espaiat proporcional entre dos caràcters específics.",
+          "La mida global de la lletra.",
+          "L'amplada total del paràgraf."
+        ],
+        correcta: 1
+      },
+      {
+        pregunta: "Quin terme descriu l'ordenació visual dels elements segons la seva importància?",
+        opcions: ["Alineació", "Jerarquia Visual", "Proximitat", "Repetició"],
+        correcta: 1
+      }
+    ];
+
+    // State Variables
+    let questionBank = [...DEFAULT_QUESTIONS];
+    let activeQuizQuestions = [];
+    let currentIndex = 0;
+    let correctCount = 0;
+    let incorrectCount = 0;
+    let hasAnsweredCurrent = false;
+
+    // Load stored questions from LocalStorage if available
+    function initApp() {
+      const saved = localStorage.getItem('dgc_minimal_quiz_data');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            questionBank = parsed;
+          }
+        } catch(e) {
+          console.error("Error carregant dades des de localStorage", e);
+        }
+      }
+      updateAllCountLabel();
+    }
+
+    function updateAllCountLabel() {
+      document.getElementById('allCountLabel').innerText = `${questionBank.length} preguntes`;
+    }
+
+    // Fisher-Yates Shuffle
+    function shuffle(arr) {
+      const array = [...arr];
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // Start Quiz
+    function startQuiz(amount) {
+      currentIndex = 0;
+      correctCount = 0;
+      incorrectCount = 0;
+
+      // Shuffle options and questions
+      let prepared = questionBank.map(q => {
+        const optionsObj = q.opcions.map((opt, i) => ({ text: opt, isCorrect: i === q.correcta }));
+        const shuffledOpts = shuffle(optionsObj);
+        return {
+          pregunta: q.pregunta,
+          opcions: shuffledOpts.map(o => o.text),
+          correctaIndex: shuffledOpts.findIndex(o => o.isCorrect)
+        };
+      });
+
+      prepared = shuffle(prepared);
+
+      if (amount === 'all') {
+        activeQuizQuestions = prepared;
+      } else {
+        activeQuizQuestions = prepared.slice(0, Math.min(amount, prepared.length));
+      }
+
+      document.getElementById('homeScreen').classList.add('hidden');
+      document.getElementById('summaryScreen').classList.add('hidden');
+      document.getElementById('quizScreen').classList.remove('hidden');
+
+      renderQuestion();
+    }
+
+    // Render Current Question
+    function renderQuestion() {
+      hasAnsweredCurrent = false;
+      const q = activeQuizQuestions[currentIndex];
+      const total = activeQuizQuestions.length;
+
+      updateStats();
+
+      // Progress
+      const progressPct = Math.round(((currentIndex + 1) / total) * 100);
+      document.getElementById('progressBar').style.width = `${progressPct}%`;
+      document.getElementById('progressText').innerText = `${String(currentIndex + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+      document.getElementById('progressPercent').innerText = `${progressPct}%`;
+
+      // Text
+      document.getElementById('questionText').innerText = q.pregunta;
+
+      // Hide Feedback
+      const feedbackBox = document.getElementById('feedbackBox');
+      feedbackBox.className = 'hidden p-3.5 rounded-lg border text-xs font-medium';
+
+      // Next Button disabled
+      const nextBtn = document.getElementById('nextBtn');
+      nextBtn.disabled = true;
+      nextBtn.classList.add('opacity-40', 'cursor-not-allowed');
+
+      // Populate Options
+      const optionsContainer = document.getElementById('optionsContainer');
+      optionsContainer.innerHTML = '';
+      const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+      q.opcions.forEach((opcioText, idx) => {
+        const btn = document.createElement('button');
+        btn.onclick = () => selectOption(idx);
+        btn.id = `opt-${idx}`;
+        btn.className = `w-full text-left p-3 rounded-lg border border-app-border bg-app-subtle hover:bg-app-card hover:border-app-borderHover transition-all flex items-start gap-3 group`;
+
+        btn.innerHTML = `
+          <span class="w-5 h-5 rounded bg-app-bg border border-app-border text-app-muted text-[11px] font-mono font-medium flex items-center justify-center shrink-0 group-hover:border-app-accent group-hover:text-app-accent transition-colors">
+            ${letters[idx] || idx + 1}
+          </span>
+          <span class="text-app-text text-xs font-normal pt-0.5 leading-relaxed">${opcioText}</span>
+        `;
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    // Handle Option Click
+    function selectOption(selectedIdx) {
+      if (hasAnsweredCurrent) return;
+      hasAnsweredCurrent = true;
+
+      const q = activeQuizQuestions[currentIndex];
+      const isCorrect = selectedIdx === q.correctaIndex;
+
+      if (isCorrect) {
+        correctCount++;
+      } else {
+        incorrectCount++;
+      }
+
+      updateStats();
+
+      // Update Option Styles
+      q.opcions.forEach((_, idx) => {
+        const btn = document.getElementById(`opt-${idx}`);
+        btn.disabled = true;
+        btn.classList.remove('hover:bg-app-card', 'hover:border-app-borderHover');
+
+        if (idx === q.correctaIndex) {
+          btn.className = `w-full text-left p-3 rounded-lg border border-app-success bg-app-success/10 text-white flex items-start gap-3`;
+        } else if (idx === selectedIdx && !isCorrect) {
+          btn.className = `w-full text-left p-3 rounded-lg border border-app-danger bg-app-danger/10 text-white flex items-start gap-3`;
+        } else {
+          btn.classList.add('opacity-40');
+        }
+      });
+
+      // Show Feedback
+      const feedbackBox = document.getElementById('feedbackBox');
+      const feedbackIcon = document.getElementById('feedbackIcon');
+      const feedbackTitle = document.getElementById('feedbackTitle');
+      const feedbackText = document.getElementById('feedbackText');
+
+      feedbackBox.classList.remove('hidden');
+
+      if (isCorrect) {
+        feedbackBox.classList.add('bg-app-success/10', 'border-app-success/30', 'text-app-success');
+        feedbackIcon.className = 'fa-solid fa-circle-check text-app-success';
+        feedbackTitle.innerText = 'Resposta Correcta';
+        feedbackText.innerText = 'Molt bé! La teva resposta és vàlida.';
+      } else {
+        feedbackBox.classList.add('bg-app-danger/10', 'border-app-danger/30', 'text-app-danger');
+        feedbackIcon.className = 'fa-solid fa-circle-xmark text-app-danger';
+        feedbackTitle.innerText = 'Resposta Incorrecta';
+        feedbackText.innerText = `L'opció correcta era: "${q.opcions[q.correctaIndex]}"`;
+      }
+
+      // Enable Next Button
+      const nextBtn = document.getElementById('nextBtn');
+      nextBtn.disabled = false;
+      nextBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+    }
+
+    // Update Top Real-time Metrics
+    function updateStats() {
+      const total = activeQuizQuestions.length;
+      const answered = correctCount + incorrectCount;
+      const remaining = total - answered;
+      const accuracy = answered > 0 ? Math.round((correctCount / answered) * 100) : 0;
+      const score10 = answered > 0 ? ((correctCount / total) * 10).toFixed(1) : "0.0";
+
+      document.getElementById('statCorrect').innerText = correctCount;
+      document.getElementById('statIncorrect').innerText = incorrectCount;
+      document.getElementById('statRemaining').innerText = remaining;
+      document.getElementById('statAccuracy').innerText = `${accuracy}%`;
+      document.getElementById('statScore10').innerText = score10;
+    }
+
+    function nextQuestion() {
+      if (!hasAnsweredCurrent) return;
+
+      currentIndex++;
+      if (currentIndex < activeQuizQuestions.length) {
+        renderQuestion();
+      } else {
+        showSummary();
+      }
+    }
+
+    function showSummary() {
+      document.getElementById('quizScreen').classList.add('hidden');
+      document.getElementById('summaryScreen').classList.remove('hidden');
+
+      const total = activeQuizQuestions.length;
+      const score10 = ((correctCount / total) * 10).toFixed(1);
+      const accuracy = Math.round((correctCount / total) * 100);
+
+      document.getElementById('finalScore10').innerText = `${score10} / 10`;
+      document.getElementById('finalCorrect').innerText = correctCount;
+      document.getElementById('finalIncorrect').innerText = incorrectCount;
+      document.getElementById('finalAccuracy').innerText = `${accuracy}%`;
+
+      const msgEl = document.getElementById('finalMessage');
+      if (score10 >= 9) {
+        msgEl.innerText = "Excel·lent! Domines completament el temari.";
+      } else if (score10 >= 7) {
+        msgEl.innerText = "Molt bon resultat! Tens una gran base.";
+      } else if (score10 >= 5) {
+        msgEl.innerText = "Aprovat. Pots seguir millorant amb més pràctica.";
+      } else {
+        msgEl.innerText = "Recomanem repassar la teoria i tornar-ho a intentar.";
+      }
+    }
+
+    function goHome() {
+      document.getElementById('quizScreen').classList.add('hidden');
+      document.getElementById('summaryScreen').classList.add('hidden');
+      document.getElementById('homeScreen').classList.remove('hidden');
+      updateAllCountLabel();
+    }
+
+    // Editor Modal Functions
+    function openEditorModal() {
+      document.getElementById('jsonInput').value = JSON.stringify(questionBank, null, 2);
+      document.getElementById('jsonError').classList.add('hidden');
+      document.getElementById('editorModal').classList.remove('hidden');
+    }
+
+    function closeEditorModal() {
+      document.getElementById('editorModal').classList.add('hidden');
+    }
+
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('jsonInput').value = e.target.result;
+      };
+      reader.readAsText(file);
+    }
+
+    function saveCustomQuestions() {
+      const textarea = document.getElementById('jsonInput');
+      const jsonError = document.getElementById('jsonError');
+      const jsonErrorText = document.getElementById('jsonErrorText');
+
+      try {
+        const parsed = JSON.parse(textarea.value);
+
+        if (!Array.isArray(parsed) || parsed.length === 0) {
+          throw new Error("El JSON ha de ser una llista (array) no buida.");
+        }
+
+        parsed.forEach((item, i) => {
+          if (!item.pregunta || typeof item.pregunta !== 'string') {
+            throw new Error(`La pregunta #${i + 1} no té el camp 'pregunta' vàlid.`);
+          }
+          if (!Array.isArray(item.opcions) || item.opcions.length < 2) {
+            throw new Error(`La pregunta #${i + 1} necessita almenys 2 opcions.`);
+          }
+          if (typeof item.correcta !== 'number' || item.correcta < 0 || item.correcta >= item.opcions.length) {
+            throw new Error(`La pregunta #${i + 1} té un índex 'correcta' fora de rang.`);
+          }
+        });
+
+        questionBank = parsed;
+        localStorage.setItem('dgc_minimal_quiz_data', JSON.stringify(questionBank));
+        updateAllCountLabel();
+        closeEditorModal();
+
+      } catch (err) {
+        jsonErrorText.innerText = err.message;
+        jsonError.classList.remove('hidden');
+      }
+    }
+
+    function loadDefaultQuestions() {
+      questionBank = [...DEFAULT_QUESTIONS];
+      localStorage.removeItem('dgc_minimal_quiz_data');
+      document.getElementById('jsonInput').value = JSON.stringify(DEFAULT_QUESTIONS, null, 2);
+      document.getElementById('jsonError').classList.add('hidden');
+      updateAllCountLabel();
+    }
+
+    function exportJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(questionBank, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", "teoria_dgc.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    window.onload = function() {
+      initApp();
+    };
+  </script>
+</body>
+</html>
