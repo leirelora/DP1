@@ -1,2600 +1,303 @@
 <!DOCTYPE html>
-<html lang="ca" class="h-full">
+<html lang="ca">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Disseny i Producte 1 — Qüestionari</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- FontAwesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Inter & JetBrains Mono Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          },
-          colors: {
-            app: {
-              bg: '#0d1117',
-              card: '#161b22',
-              border: '#30363d',
-              borderHover: '#8b949e',
-              subtle: '#21262d',
-              text: '#c9d1d9',
-              muted: '#8b949e',
-              accent: '#388bfd',
-              accentHover: '#1f6feb',
-              success: '#2ea043',
-              danger: '#f85149',
-              warning: '#d29922'
-            }
-          }
-        }
-      }
-    }
-  </script>
+  <title>Disseny i Producte 1 - Test de Preparació</title>
   <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --accent-hover: #1f6feb;
+      --correct: #238636;
+      --incorrect: #da3633;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0d1117;
-      color: #c9d1d9;
-      -webkit-font-smoothing: antialiased;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px 15px;
     }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
     }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: #0d1117;
+
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
     }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #30363d;
-      border-radius: 3px;
+
+    .subtitle {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #f0f6fc;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* Pantalla d'Inici */
+    .mode-selection p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 500;
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn:hover {
+      background-color: rgba(88, 166, 255, 0.1);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-full {
+      grid-column: 1 / -1;
+      background-color: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    .btn-full:hover {
+      background-color: var(--accent-hover);
+      color: #ffffff;
+    }
+
+    /* Mètriques */
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .metric-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 4px;
+    }
+
+    .metric-label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .metric-value {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #f0f6fc;
+    }
+
+    /* Qüestionari */
+    .progress-bar {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .question-header {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .question-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+      line-height: 1.4;
+      margin-bottom: 20px;
+      color: #f0f6fc;
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-btn {
+      text-align: left;
+      line-height: 1.4;
+    }
+
+    .option-btn.correct {
+      background-color: rgba(35, 134, 54, 0.2) !important;
+      border-color: var(--correct) !important;
+      color: #56d364 !important;
+    }
+
+    .option-btn.incorrect {
+      background-color: rgba(218, 54, 51, 0.2) !important;
+      border-color: var(--incorrect) !important;
+      color: #f85149 !important;
+    }
+
+    /* Resultats finals */
+    .results-card {
+      text-align: center;
+    }
+
+    .results-card h2 {
+      margin-bottom: 12px;
+    }
+
+    .score-display {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 16px 0;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 480px) {
+      .dashboard {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .metric-box:nth-child(4), .metric-box:nth-child(5) {
+        grid-column: span 1;
+      }
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-blue-500/30 selection:text-white">
+<body>
 
-  <!-- TOP HEADER -->
-  <header class="border-b border-app-border/60 bg-app-bg/80 backdrop-blur-md sticky top-0 z-30">
-    <div class="max-w-4xl mx-auto px-4 py-3.5 flex items-center justify-between">
-      <div class="cursor-pointer flex items-center gap-2.5" onclick="goHome()">
-        <div class="w-2 h-2 rounded-full bg-app-accent"></div>
-        <div>
-          <h1 class="text-sm font-semibold text-white tracking-tight">Disseny Gràfic i Comunicació</h1>
-        </div>
-      </div>
+  <div class="container">
+    <header>
+      <div class="subtitle">Disseny i Producte 1</div>
+      <h1>Qüestionari de preparació</h1>
+    </header>
 
-
-
-  <!-- MAIN CONTAINER -->
-  <main class="max-w-3xl mx-auto px-4 py-10 flex-1 w-full flex flex-col justify-center">
-
-    <!-- 1. HOME / MODE SELECTOR SCREEN -->
-    <div id="homeScreen" class="space-y-8 w-full max-w-xl mx-auto">
-      <div class="space-y-2 text-center">
-        <h2 class="text-2xl font-bold text-white tracking-tight">Qüestionari de preparació</h2>
-        <p class="text-xs text-app-muted max-w-sm mx-auto">
-          Selecciona la quantitat de preguntes per iniciar la sessió d'estudi.
-        </p>
-      </div>
-
-      <!-- Mode selection buttons -->
-      <div class="space-y-2">
-        <div class="grid grid-cols-2 gap-2">
-          <button onclick="startQuiz(10)" class="p-3.5 bg-app-card hover:bg-app-subtle border border-app-border hover:border-app-borderHover rounded-lg transition-all text-left flex items-center justify-between group">
-            <span class="text-xs font-semibold text-white">10 Preguntes</span>
-            <span class="text-[11px] font-mono text-app-muted group-hover:text-app-text transition-colors">Ràpid</span>
-          </button>
-
-          <button onclick="startQuiz(25)" class="p-3.5 bg-app-card hover:bg-app-subtle border border-app-border hover:border-app-borderHover rounded-lg transition-all text-left flex items-center justify-between group">
-            <span class="text-xs font-semibold text-white">25 Preguntes</span>
-            <span class="text-[11px] font-mono text-app-muted group-hover:text-app-text transition-colors">Estàndard</span>
-          </button>
-
-          <button onclick="startQuiz(50)" class="p-3.5 bg-app-card hover:bg-app-subtle border border-app-border hover:border-app-borderHover rounded-lg transition-all text-left flex items-center justify-between group">
-            <span class="text-xs font-semibold text-white">50 Preguntes</span>
-            <span class="text-[11px] font-mono text-app-muted group-hover:text-app-text transition-colors">Aprofundit</span>
-          </button>
-
-          <button onclick="startQuiz(100)" class="p-3.5 bg-app-card hover:bg-app-subtle border border-app-border hover:border-app-borderHover rounded-lg transition-all text-left flex items-center justify-between group">
-            <span class="text-xs font-semibold text-white">100 Preguntes</span>
-            <span class="text-[11px] font-mono text-app-muted group-hover:text-app-text transition-colors">Intensiu</span>
-          </button>
-        </div>
-
-        <button onclick="startQuiz('all')" class="w-full p-3.5 bg-app-card hover:bg-app-subtle border border-app-border hover:border-app-borderHover rounded-lg transition-all text-left flex items-center justify-between group">
-          <span class="text-xs font-semibold text-white">Totes les preguntes</span>
-          <span id="allCountLabel" class="text-[11px] font-mono text-app-accent">-- preguntes</span>
-        </button>
-      </div>
-
-
-    <!-- 2. ACTIVE QUIZZ SCREEN -->
-    <div id="quizScreen" class="hidden space-y-6 w-full">
-      
-      <!-- Minimalist Real-Time Stats Bar -->
-      <div class="grid grid-cols-5 gap-2 bg-app-card border border-app-border p-3 rounded-lg text-center font-mono">
-        <div>
-          <span class="block text-[10px] uppercase text-app-muted tracking-wider">Correctes</span>
-          <span id="statCorrect" class="text-sm font-semibold text-app-success">0</span>
-        </div>
-        <div>
-          <span class="block text-[10px] uppercase text-app-muted tracking-wider">Incorrectes</span>
-          <span id="statIncorrect" class="text-sm font-semibold text-app-danger">0</span>
-        </div>
-        <div>
-          <span class="block text-[10px] uppercase text-app-muted tracking-wider">Restants</span>
-          <span id="statRemaining" class="text-sm font-semibold text-app-text">0</span>
-        </div>
-        <div>
-          <span class="block text-[10px] uppercase text-app-muted tracking-wider">Encert</span>
-          <span id="statAccuracy" class="text-sm font-semibold text-app-warning">0%</span>
-        </div>
-        <div>
-          <span class="block text-[10px] uppercase text-app-muted tracking-wider">Nota /10</span>
-          <span id="statScore10" class="text-sm font-semibold text-app-accent">0.0</span>
-        </div>
-      </div>
-
-      <!-- Progress bar -->
-      <div class="space-y-1.5">
-        <div class="flex justify-between items-center text-[11px] font-mono text-app-muted">
-          <span id="progressText">01 / 10</span>
-          <span id="progressPercent">0%</span>
-        </div>
-        <div class="w-full bg-app-subtle rounded-full h-1 overflow-hidden">
-          <div id="progressBar" class="bg-app-accent h-full transition-all duration-300" style="width: 0%"></div>
-        </div>
-      </div>
-
-      <!-- Question Card -->
-      <div class="bg-app-card border border-app-border rounded-xl p-6 space-y-6">
-        <h3 id="questionText" class="text-base font-medium text-white leading-snug">
-          Carregant la pregunta...
-        </h3>
-
-        <!-- Options list -->
-        <div id="optionsContainer" class="space-y-2">
-          <!-- Populated dynamically -->
-        </div>
-
-        <!-- Feedback alert -->
-        <div id="feedbackBox" class="hidden p-3.5 rounded-lg border text-xs font-medium">
-          <div class="flex items-center gap-2">
-            <i id="feedbackIcon" class="fa-solid"></i>
-            <span id="feedbackTitle" class="font-semibold"></span>
-          </div>
-          <p id="feedbackText" class="text-app-muted mt-1 font-normal"></p>
-        </div>
-      </div>
-
-      <!-- Actions -->
-      <div class="flex items-center justify-between pt-1">
-        <button onclick="goHome()" class="text-xs text-app-muted hover:text-white transition-colors">
-          <i class="fa-solid fa-arrow-left mr-1"></i> Sortir
-        </button>
-
-        <button id="nextBtn" onclick="nextQuestion()" disabled class="opacity-40 cursor-not-allowed px-4 py-2 bg-app-accent hover:bg-app-accentHover text-white font-medium text-xs rounded-md transition-all flex items-center gap-2">
-          <span>Següent</span>
-          <i class="fa-solid fa-arrow-right text-[10px]"></i>
-        </button>
-      </div>
-
-    </div>
-
-    <!-- 3. SUMMARY SCREEN -->
-    <div id="summaryScreen" class="hidden max-w-md mx-auto w-full space-y-6">
-      <div class="bg-app-card border border-app-border rounded-xl p-8 text-center space-y-6">
-        
-        <div class="space-y-1">
-          <span class="text-xs uppercase font-mono text-app-muted tracking-wider">Resultat final</span>
-          <div id="finalScore10" class="text-4xl font-bold text-white tracking-tight my-2">0.0 / 10</div>
-          <p id="finalMessage" class="text-xs text-app-muted"></p>
-        </div>
-
-        <div class="grid grid-cols-3 gap-2 py-2 border-y border-app-border font-mono text-xs">
-          <div class="p-2">
-            <span class="text-[10px] text-app-muted uppercase block">Correctes</span>
-            <span id="finalCorrect" class="font-semibold text-app-success">0</span>
-          </div>
-          <div class="p-2">
-            <span class="text-[10px] text-app-muted uppercase block">Incorrectes</span>
-            <span id="finalIncorrect" class="font-semibold text-app-danger">0</span>
-          </div>
-          <div class="p-2">
-            <span class="text-[10px] text-app-muted uppercase block">Encert</span>
-            <span id="finalAccuracy" class="font-semibold text-app-warning">0%</span>
-          </div>
-        </div>
-
-        <button onclick="goHome()" class="w-full py-2.5 bg-app-accent hover:bg-app-accentHover text-white text-xs font-medium rounded-md transition-colors">
-          Tornar al menú principal
-        </button>
+    <!-- Pantalla d'Inici -->
+    <div id="start-screen" class="card mode-selection">
+      <p>Selecciona el nombre de preguntes per començar el test. Les preguntes i opcions es barregen aleatòriament.</p>
+      <div class="btn-grid">
+        <button class="btn" onclick="iniciarTest(10)">10 Preguntes</button>
+        <button class="btn" onclick="iniciarTest(25)">25 Preguntes</button>
+        <button class="btn" onclick="iniciarTest(50)">50 Preguntes</button>
+        <button class="btn" onclick="iniciarTest(100)">100 Preguntes</button>
+        <button class="btn btn-full" onclick="iniciarTest('totes')">Totes les preguntes</button>
       </div>
     </div>
 
-  </main>
-
-  <!-- 4. JSON EDITOR & FILE IMPORT MODAL -->
-  <div id="editorModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-app-card border border-app-border rounded-xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
-      
-      <!-- Modal Header -->
-      <div class="px-5 py-3.5 border-b border-app-border flex items-center justify-between">
-        <h3 class="text-xs font-semibold text-white tracking-wide">Gestor de Teoria (JSON)</h3>
-        <button onclick="closeEditorModal()" class="text-app-muted hover:text-white p-1">
-          <i class="fa-solid fa-xmark text-sm"></i>
-        </button>
-      </div>
-
-      <!-- Modal Body -->
-      <div class="p-5 space-y-4 flex-1 overflow-y-auto custom-scrollbar">
-        
-        <!-- Local File Import Bar -->
-        <div class="p-3 bg-app-subtle border border-app-border rounded-lg flex items-center justify-between text-xs">
-          <span class="text-app-muted">Carregar fitxer JSON local:</span>
-          <input type="file" id="fileInput" accept=".json" onchange="handleFileUpload(event)" class="hidden">
-          <button onclick="document.getElementById('fileInput').click()" class="px-3 py-1 bg-app-card hover:bg-app-border border border-app-border text-white text-xs rounded transition-colors">
-            <i class="fa-solid fa-upload mr-1 text-[10px]"></i> Seleccionar Fitxer
-          </button>
+    <!-- Pantalla de Joc -->
+    <div id="quiz-screen" class="hidden">
+      <div class="dashboard">
+        <div class="metric-box">
+          <div class="metric-label">Correctes</div>
+          <div id="m-correctes" class="metric-value">0</div>
         </div>
-
-        <p class="text-[11px] text-app-muted">
-          Pots editar el JSON manualment a sota. L'índex <code class="bg-app-subtle px-1 rounded text-app-text">correcta</code> indica la posició de la resposta vàlida (comença a 0).
-        </p>
-
-        <textarea id="jsonInput" rows="11" class="w-full bg-app-bg text-app-text font-mono text-xs p-3.5 rounded-lg border border-app-border focus:outline-none focus:border-app-accent transition-colors" spellcheck="false"></textarea>
-
-        <div id="jsonError" class="hidden p-3 bg-app-danger/10 border border-app-danger/30 rounded-lg text-app-danger text-xs">
-          <span id="jsonErrorText">Format JSON invàlid.</span>
+        <div class="metric-box">
+          <div class="metric-label">Incorrectes</div>
+          <div id="m-incorrectes" class="metric-value">0</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Restants</div>
+          <div id="m-restants" class="metric-value">0</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Encert %</div>
+          <div id="m-encert" class="metric-value">—</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Nota /10</div>
+          <div id="m-nota" class="metric-value">—</div>
         </div>
       </div>
 
-      <!-- Modal Footer -->
-      <div class="px-5 py-3 border-t border-app-border flex items-center justify-between bg-app-bg/50">
-        <button onclick="loadDefaultQuestions()" class="text-xs text-app-muted hover:text-app-warning transition-colors">
-          Restablir teoria per defecte
-        </button>
-        <div class="flex items-center gap-2">
-          <button onclick="exportJSON()" class="px-3 py-1.5 border border-app-border hover:bg-app-subtle text-app-text text-xs rounded transition-colors">
-            Descarregar JSON
-          </button>
-          <button onclick="saveCustomQuestions()" class="px-3.5 py-1.5 bg-app-accent hover:bg-app-accentHover text-white text-xs font-medium rounded transition-colors">
-            Guardar Canvis
-          </button>
+      <div class="card">
+        <div class="progress-bar">
+          <div id="progress-fill" class="progress-fill"></div>
         </div>
+        <div id="q-header" class="question-header">Pregunta 0 / 0</div>
+        <div id="q-title" class="question-title">Carregant...</div>
+        <div id="options-container" class="options-list"></div>
       </div>
+    </div>
 
+    <!-- Pantalla de Resultats -->
+    <div id="results-screen" class="card results-card hidden">
+      <h2>Sessió Finalitzada</h2>
+      <div class="score-display" id="final-score">0.0</div>
+      <p id="final-stats" style="color: var(--text-muted); margin-bottom: 20px;"></p>
+      <button class="btn btn-full" onclick="tornarAInici()">Tornar a començar</button>
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer class="border-t border-app-border/40 py-3 text-center text-[11px] text-app-muted">
-    <p>Disseny Gràfic i Comunicació — Plataforma de Repàs</p>
-  </footer>
-
-  <!-- JAVASCRIPT LOGIC -->
   <script>
-    // DEFAULT THEORY QUESTION BANK
-    const DEFAULT_QUESTIONS = [
+    const bancPreguntes = [
       {
         "pregunta": "En quin període aproximat se situen els primers envasos pres directe de la natura com closques, carbasses o cocos?",
-        "opcions": [
-          "8.000 a.C. – 1.500 a.C.",
-          "1.000 a.C. – 500 d.C.",
-          "1800 d.C. – 1900 d.C.",
-          "500 a.C. – 100 a.C."
-        ],
-        "correcta": 0
+        "opcions": ["1800 d.C. – 1900 d.C.", "1.000 a.C. – 500 d.C.", "500 a.C. – 100 a.C.", "8.000 a.C. – 1.500 a.C."],
+        "correcta": 3
       },
       {
-        "pregunta": "Quan apareixen els primers envasos de fusta imitant contenidors naturals segons la cronologia històrica del packaging?",
-        "opcions": [
-          "1.500 a.C.",
-          "7.000 a.C.",
-          "3.000 a.C.",
-          "1900 d.C."
-        ],
-        "correcta": 1
-      },
-      {
-        "pregunta": "On neix la terrissa com a funció i expressió artística cap a l'any 1.500 a.C.?",
-        "opcions": [
-          "A la Xina i el Japó",
-          "A Síria, Mesopotàmia i Egipte",
-          "A Grècia i Roma",
-          "A l'Europa Central"
-        ],
-        "correcta": 1
-      },
-      {
-        "pregunta": "Quines són les tres forces principals que expliquen l'evolució del packaging des de 1945?",
-        "opcions": [
-          "Canvis socioeconòmics, avenços tecnològics i comerç minorista",
-          "Globalització, ecologia i automatització",
-          "Lleis de plàstic, disseny digital i impressió 3D",
-          "Transport marítim, fusta i vidre"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "En quin any comença la venda de cervesa en llaunes d'alumini als Estats Units?",
-        "opcions": [
-          "1935",
-          "1959",
-          "1970",
-          "1944"
-        ],
-        "correcta": 1
-      },
-      {
-        "pregunta": "Qui va idear el 1944 a Suècia un envàs de cartró en forma de tetraedre segellable de manera contínua?",
-        "opcions": [
-          "Erik Wallenberg",
-          "Gillis Lundgren",
-          "Raymond Loewy",
-          "Peter Durand"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "En quin període neix el plàstic com a material d'envàs gràcies a les resines sintètiques?",
-        "opcions": [
-          "Cap a 1910",
-          "Cap a 1950",
-          "Cap a 1980",
-          "Cap a 1850"
-        ],
-        "correcta": 1
-      },
-      {
-        "pregunta": "Quin avanç va patentar Coca-Cola el 1970 pel qual va llançar la primera ampolla de plàstic de 2 litres?",
-        "opcions": [
-          "El PET biaxialment orientat",
-          "El polietilè d'alta densitat",
-          "El tetrabric d'alumini",
-          "El plàstic vegetal Plantbottle"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin moviment artístic va tenir una marcada influència en el packaging durant el període 1900-1909?",
-        "opcions": [
-          "Art Déco",
-          "Art Nouveau",
-          "Bauhaus",
-          "Minimalisme"
-        ],
-        "correcta": 1
-      },
-      {
-        "pregunta": "Què va provocar la Gran Guerra (1910-1919) en el sector de l'envàs?",
-        "opcions": [
-          "El vidre va cedir pas a la llauna i va nàixer el concepte de 'ració'",
-          "Es va prohibir l'ús de metall en envasos alimentaris",
-          "Va néixer el tetrabric de cartró",
-          "Es van imposar les ampolles de PET"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin estil artístic es va imposar en el packaging durant la dècada de 1920-1929 amb formes geomètriques i colors intensos?",
-        "opcions": [
-          "Art Nouveau",
-          "Art Déco",
-          "Futurisme",
-          "Pop Art"
-        ],
-        "correcta": 1
-      },
-      {
-        "pregunta": "Quin va ser el famós redisseny realitzat per Raymond Loewy el 1942 per a la marca Lucky Strike?",
-        "opcions": [
-          "Substituir el fons verd per fons blanc",
-          "Canviar el paquet rígid per una bossa de plàstic",
-          "Afegir una anella d'obertura fàcil",
-          "Substituir la lletra per una icona"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "En quina dècada es va introduir la fotografia com a element central del packaging i es generalitzà el menjar ràpid?",
-        "opcions": [
-          "Anys 1940s",
-          "Anys 1960s",
-          "Anys 1980s",
-          "Anys 2000s"
-        ],
-        "correcta": 1
-      },
-      {
-        "pregunta": "Quin color s'associava a la qualitat en els envasos durant la dècada de 1970-1979?",
-        "opcions": [
-          "Blau",
-          "Groc",
-          "Negre",
-          "Vermell"
-        ],
-        "correcta": 1
-      },
-      {
-        "pregunta": "En quina dècada comença la tendència ecològica i apareix el primer 'greenwashing' en packaging?",
-        "opcions": [
-          "1950–1959",
-          "1970–1979",
-          "1990–1999",
-          "2020–2026"
-        ],
-        "correcta": 2
-      },
-      {
-        "pregunta": "Quant va baixar el pes mitjà dels envasos entre l'any 2000 i la dècada 2010-2019?",
-        "opcions": [
-          "Un 5%",
-          "Un 22%",
-          "Un 50%",
-          "Un 10%"
-        ],
-        "correcta": 1
-      },
-      {
-        "pregunta": "Quan va ser aprovat el Reglament Europeu d'Envasos (PPWR - Reglament UE 2025/40)?",
-        "opcions": [
-          "Desembre de 2024",
-          "Gener de 2020",
-          "Agost de 2026",
-          "Gener de 2018"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Des de quina data és vigent el Reglament PPWR (UE 2025/40)?",
-        "opcions": [
-          "11 de febrer del 2025",
-          "12 d'agost del 2026",
-          "1 de gener del 2030",
-          "31 de desembre del 2024"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "A partir de quina data és d'aplicació general el Reglament PPWR a tots els estats membres?",
-        "opcions": [
-          "11 de febrer del 2025",
-          "12 d'agost del 2026",
-          "1 de gener del 2028",
-          "12 d'agost del 2030"
-        ],
-        "correcta": 1
-      },
-      {
-        "pregunta": "Quin requisit estableix el PPWR per a tots els envasos de cara a l'any 2030?",
-        "opcions": [
-          "Tot l'envàs haurà de ser reciclable (graus A-E)",
-          "Es prohibirà l'ús de qualsevol tipus de cartró",
-          "Tots els envasos hauran de ser de vidre o metall",
-          "S'eliminarà completament el transport marítim"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Qui va dissenyar la famosa ampolla contour de Coca-Cola el 1915?",
-        "opcions": [
-          "Root Glass",
-          "Gillis Lundgren",
-          "Erik Wallenberg",
-          "Raymond Loewy"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "En quin any es va convertir la forma de l'ampolla contour de Coca-Cola en marca registrada?",
-        "opcions": [
-          "1915",
-          "1944",
-          "1977",
-          "2000"
-        ],
-        "correcta": 2
-      },
-      {
-        "pregunta": "Quin concepte va néixer el 1956 quan Gillis Lundgren (IKEA) va treure les potes a una taula per ficar-la al cotxe?",
-        "opcions": [
-          "El Tetra Pak",
-          "El Flat-pack (moble pla autoinstal·lable)",
-          "El palet normalitzat",
-          "El brik de cartró"
-        ],
-        "correcta": 1
-      },
-      {
-        "pregunta": "Quin element tecnològic permet detectar l'estat dels aliments en els envasos de la dècada de 2020?",
-        "opcions": [
-          "Sensors i tecnologia NFC",
-          "Litografia d'estany",
-          "Impressió tipogràfica",
-          "Films de cel·lofan"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin va ser el canvi principal en el paper de la marca des de finals dels anys 60 fins als anys 90/2000?",
-        "opcions": [
-          "Va passar de garantir la qualitat del fabricant a representar valors, estil de vida i ser vehicle d'extensió",
-          "Va passar de ser un element gràfic a ser un codi de barres",
-          "Va desaparèixer del packaging primari",
-          "Només indicava el preu del producte"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quins tres pilars fonamenten un disseny de packaging irresistible segons les conclusions del Tema 1?",
-        "opcions": [
-          "Bones idees, domini de materials/software i entendre factors socials/de venda",
-          "Baix cost, transport ràpid i molt plàstic",
-          "Colors cridaners, gran grandària i vidre gruixut",
-          "Només la creativitat aïllada del dissenyador"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "En quin període es va popularitzar l'ús de la llauna d'estany i acer impulsada per les necessitats militars?",
-        "opcions": [
-          "Segona Guerra Mundial (1939-1945)",
-          "Guerra de Vietnam (1960s)",
-          "Primera Guerra Mundial (1914-1918)",
-          "Guerra Civil Espanyola"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quan va ser patentat el Pop Top Can?",
-        "opcions": [
-          "1930s",
-          "1960s",
-          "1990s",
-          "1910s"
-        ],
-        "correcta": 1
-      },
-      {
-        "pregunta": "En quina dècada neix la Plantbottle feta amb un 100% de plàstic vegetal?",
-        "opcions": [
-          "1990s",
-          "2010s",
-          "1970s",
-          "1950s"
-        ],
-        "correcta": 1
-      },
-      {
-        "pregunta": "Quin efecte va tenir la pandèmia de 2020-2021 sobre el packaging?",
-        "opcions": [
-          "Va disparar l'e-commerce exigint protecció en trajectes llargs i imprevisibles",
-          "Va eliminar completament el packaging de cartró",
-          "Va fer reduir la venda d'aliments precuinats",
-          "Va prohibir els envasos de vidre"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com es defineix el concepte global de 'packaging'?",
-        "opcions": [
-          "Envàs + procés de disseny + selecció de materials + funcionalitats + comunicació",
-          "Només el dibuix o la gràfica de la caixa",
-          "El material reciclat abans de ser processat",
-          "El transport logístic entre el proveïdor i la fàbrica"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin tipus d'envàs està en contacte directe amb el producte?",
-        "opcions": [
-          "Envàs primari",
-          "Envàs secundari",
-          "Envàs terciari",
-          "Unitat de càrrega"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina és la funció principal de l'envàs secundari?",
-        "opcions": [
-          "Agrupar envasos primaris, protegir, identificar i comunicar",
-          "Estar en contacte directe amb l'aliment o líquid",
-          "Unificar la càrrega sobre un palet de fusta",
-          "Mantenir el buit hermètic en conserves"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com es classifica un envàs que conté diferents varietats d'un mateix producte?",
-        "opcions": [
-          "Envàs col·lectiu",
-          "Envàs múltiple",
-          "Envàs terciari",
-          "Envàs primari"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com es defineix un envàs rígid per la seva constitució?",
-        "opcions": [
-          "Té una forma definida i no modificable la rigidesa de la qual permet contenir el producte",
-          "Canvia de forma segons la pressió de l'aire",
-          "Està compost exclusivament per films de plàstic prims",
-          "És un recipient biodegradable de fusta humida"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Dins la funció búnker de l'envàs, quines són les quatre accions bàsiques?",
-        "opcions": [
-          "Contenir, protegir, conservar i transportar",
-          "Vendre, publicar, il·luminar i fotografiar",
-          "Plegar, tallar, enganxar i laminar",
-          "Reciclar, cremar, abocar i reutilitzar"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina funció comunicativa de l'envàs es defineix com la 'capacitat per ser percebut en molt poc temps i des de la màxima distància'?",
-        "opcions": [
-          "Atracció o impacte",
-          "Diferenciació",
-          "Efecte mirall",
-          "Informació"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina funció de l'envàs s'encarrega d'aportar les dades objectives i estipulades per llei?",
-        "opcions": [
-          "Informació (funció freda)",
-          "Seducció",
-          "Efecte mirall",
-          "Atracció"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Segons Ferdinand de Saussure, quines són les dues cares d'un signe semiòtic?",
-        "opcions": [
-          "Significant i significat",
-          "Icona i símbol",
-          "Denotació i connotació",
-          "Forma i funció"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quins tres tipus de signes va definir Charles S. Peirce?",
-        "opcions": [
-          "Icona, índex i símbol",
-          "Significant, significat i mite",
-          "Primari, secundari i terciari",
-          "Metàfora, metonímia i hipèrbole"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quins tres nivells de lectura semiòtica proposa Roland Barthes?",
-        "opcions": [
-          "Denotació, connotació i mite",
-          "Icona, índex i símbol",
-          "Forma, color i textura",
-          "Significant, significat i codi"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina figura retòrica en packaging exalta els valors del producte substituint-lo per analogia?",
-        "opcions": [
-          "Metàfora",
-          "Metonímia",
-          "Hipèrbole",
-          "Prosopopeia"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina figura retòrica consisteix a expressar 'la part pel tot, o el tot per la part'?",
-        "opcions": [
-          "Sinècdoque",
-          "El·lipsi",
-          "Lítote",
-          "Antítesi"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin tipus de consumidor segons la classificació del Tema 2 té com a criteri principal de compra el PREU a causa del seu baix poder adquisitiu?",
-        "opcions": [
-          "Consumidor de subsistència",
-          "Consumidor sibarita",
-          "Consumidor selectiu",
-          "Consumidor activista"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin consumidor avalua la qualitat per sobre de tot, es preocupa per l'ecologia i la composició del producte?",
-        "opcions": [
-          "Consumidor selectiu",
-          "Consumidor de subsistència",
-          "Consumidor conservador",
-          "Consumidor escèptic"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com es defineix el consumidor activista?",
-        "opcions": [
-          "Cerca un bé o servei que respongui a determinats valors (com la sostenibilitat) i està disposat a pagar més",
-          "Compra exclusivament per impuls quan veu una oferta",
-          "Ignora les recessions econòmiques i gasta grans sumes en luxe",
-          "Només compra productes d'oferta de primera necessitat"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina diferència hi ha entre el consumidor impulsiu i el compulsiu?",
-        "opcions": [
-          "El compulsiu compra per plaer immediat, després se'n penedeix i torna a gastar per sentir-se millor",
-          "L'impulsiu fa un exercici reflexiu molt lent abans de pagar",
-          "El compulsiu només compra productes amb segell ecològic",
-          "Són termes exactament idèntics sense cap diferència"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quines són les 5 fases del procés de decisió de compra?",
-        "opcions": [
-          "Reconeix la necessitat, cerca informació, avalua alternatives, decisió de compra i comportament post-compra",
-          "Disseny, prototip, producció, distribució i reciclatge",
-          "Anàlisi, esbós, troquel, impressió i envasat",
-          "Atenció, interès, desig, memòria i acció"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "En quines fases del procés de decisió de compra és especialment decisiu el packaging al lineal?",
-        "opcions": [
-          "Fases 3 i 4 (Avaluació d'alternatives i Decisió de compra)",
-          "Fase 1 (Reconeixement de la necessitat)",
-          "Fase 5 (Comportament post-compra)",
-          "En cap fase"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quins són els tres nivells d'un producte segons la teoria del màrqueting?",
-        "opcions": [
-          "Essencial, Formal i Augmentat",
-          "Primari, Secundari i Terciari",
-          "Rígid, Semirígid i Flexible",
-          "Entrada, Mitjà i Premium"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com es defineix la 'vida útil' d'un envàs?",
-        "opcions": [
-          "La fase d'utilització: el temps que compleix la seva funció",
-          "El temps que triga a degradar-se en un abocador",
-          "El temps de fabricació a la línia de muntatge",
-          "L'edat mitjana del consumidor que el compra"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Què mesura l'Anàlisi de Cicle de Vida (ACV)?",
-        "opcions": [
-          "L'impacte ambiental d'un producte al llarg de tota la seva vida, des de les matèries primeres fins al final de vida",
-          "Només el cost econòmic del transport de distribució",
-          "El temps de rotació al lineal del supermercat",
-          "El nombre de colors utilitzats en la impressió"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quines són les quatre fases d'un estudi d'Anàlisi de Cicle de Vida (ACV)?",
-        "opcions": [
-          "1. Objectiu i abast, 2. Inventari (LCI), 3. Avaluació d'impacte, 4. Interpretació",
-          "1. Concepte, 2. Esbós, 3. Prototip, 4. Venda",
-          "1. Abrasió, 2. Caiguda, 3. Vibració, 4. Humitat",
-          "1. Recollida, 2. Neteja, 3. Triturat, 4. Fusió"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Què significa un límit del sistema anomenat 'Cradle-to-Grave'?",
-        "opcions": [
-          "De l'origen (del bressol) fins al final de vida (a la tomba)",
-          "De l'origen a la sortida de fàbrica",
-          "Un cicle on el residu torna a ser recurs",
-          "De la botiga al consumidor final"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com es defineix un 'pool' de gestió d'envasos?",
-        "opcions": [
-          "Un circuit integrat de gestió d'envasos i embalatges per reduir costos i aprofitar sinergies",
-          "Una piscina d'aigua on es netegen les ampolles de plàstic",
-          "Un abocador controlat exclusiu per a residus de metall",
-          "Un impost sobre la fabricació de cartró verge"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin tipus de productes es caracteritza per una molt baixa involucració de compra per part del consumidor?",
-        "opcions": [
-          "Productes de conveniència",
-          "Productes d'especialitat",
-          "Productes no buscats",
-          "Productes de comparació"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin pas de l'anàlisi semiòtic de packaging avalua la psicologia del color, la curvatura i el pes visual?",
-        "opcions": [
-          "Pas 3: Forma, textura i color",
-          "Pas 1: Producte i primera experiència",
-          "Pas 2: Material",
-          "Pas 4: Tipografia i iconografia"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és un dels principals reptes logístics dels envasos reutilitzables respecte als d'un sol ús?",
-        "opcions": [
-          "Cal un circuit de retorn que reculli l'envàs buit, el netegi i el torni al productor",
-          "No es poden imprimir amb cap logo de marca",
-          "Pesen la meitat que els envasos flexibles",
-          "Estan prohibits per la normativa PPWR"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com es defineix l'envàs 'múltiple' segons la seva aplicació?",
-        "opcions": [
-          "Diversos productes iguals dins d'un mateix envàs",
-          "Diferents varietats d'un mateix producte",
-          "Un envàs de vidre amb tancament metàl·lic",
-          "Un palet amb 50 caixes de cartró"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Què revela sovint un estudi d'ACV respecte als 'punts calents' d'impacte ambiental?",
-        "opcions": [
-          "Que l'impacte d'un producte pot estar en els ingredients/contingut i no en l'envàs",
-          "Que sempre el plàstic té menys impacte que el cartró",
-          "Que la impressió gràfica és el 90% de la petjada de carboni",
-          "Que transportar per avió no té cap impacte mesurable"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina Directiva europea de 1994 va introduir per primer cop els 'requisits essencials' per als envasos?",
-        "opcions": [
-          "Directiva 94/62/CE",
-          "Directiva 2004/12/CE",
-          "Directiva 2018/852",
-          "Directiva 2022/1055"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és el concepte clau impulsat per la Directiva 2018/852?",
-        "opcions": [
-          "La transició cap a una economia circular",
-          "L'ús exclusiu de vidre",
-          "La prohibició de la venda en línia",
-          "La creació de nous abocadors"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Amb quins Objectius de Desenvolupament Sostenible (ODS) de l'Agenda 2030 s'aligna la Llei 7/2022 espanyola?",
-        "opcions": [
-          "ODS 12 (consum responsable), 13 (acció climàtica) i 14 (vida submarina)",
-          "ODS 1, 2 i 3",
-          "ODS 5, 7 i 9",
-          "ODS 4, 8 i 10"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina novetat clau introdueix el Reial Decret RD 1055/2022 respecte a la Responsabilitat Ampliada del Productor (RAP)?",
-        "opcions": [
-          "S'estén als envasos comercials i industrials, no només als domèstics",
-          "Prohibeix totalment el cartró corrugat",
-          "Elimina l'obligació de declarar els envasos",
-          "Obliga a utilitzar només envasos de fusta"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és l'import de l'impost especial sobre els envasos de plàstic no reutilitzables a Espanya des de l'1 de gener de 2023?",
-        "opcions": [
-          "0,45 € per kg de plàstic NO reciclat",
-          "1,00 € per unitat d'envàs",
-          "0,10 € per kg de plàstic total",
-          "2,50 € per litre d'envàs"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina norma tècnica cal complir per acreditar el contingut de plàstic reciclat a efectes de l'impost del plàstic?",
-        "opcions": [
-          "UNE-EN 15343",
-          "ISO 9001",
-          "FEFCO 0201",
-          "UNE-EN 14001"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Què és la prevenció en matèria d'envasos?",
-        "opcions": [
-          "La reducció de la quantitat i de la nocivitat per al medi ambient dels materials i envasos al llarg de tot el cicle de vida",
-          "L'eliminació de totes les etiquetes de paper",
-          "La substitució de tota la fusta per metall",
-          "El pagament de multes per contaminació"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com afecta l'augment de llars unipersonals i de la població gran a la demanda d'envasos?",
-        "opcions": [
-          "Exigeix formats més petits/individuals, obertura fàcil i ergonomia adaptada",
-          "Impulsa la venda de paquets industrials de 50 kg",
-          "Elimina la necessitat de packaging primari",
-          "Fa que el vidre sigui l'únic material utilitzat"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com es calcula l'indicador d'eficiència Kr/Kp d'un packaging?",
-        "opcions": [
-          "Kg de residu d'envàs generats en un any (Kr) / Kg de producte envasat el mateix any (Kp)",
-          "Kg de plàstic utilitzats / Nombre de treballadors de la fàbrica",
-          "Kg de cartró reciclat / Volum del camió de transport",
-          "Cost del dissenyador / Preu de venda al públic"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Què indica un valor Kr/Kp més baix?",
-        "opcions": [
-          "Que el packaging és més eficient (cal menys envàs per posar al mercat el producte)",
-          "Que l'envàs és de mala qualitat",
-          "Que l'envàs té massa plàstic verge",
-          "Que el producte està mal protegit"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin percentatge de reducció de pes va aconseguir la llauna d'alumini entre 1983 i els anys 2020?",
-        "opcions": [
-          "Més d'un 37%",
-          "Un 5%",
-          "Un 80%",
-          "Un 12%"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina és la reducció de gruix en les làmines d'acer per a begudes entre 1996 i 2007?",
-        "opcions": [
-          "De 0,33 mm a 0,22 mm (18,5% de reducció)",
-          "De 1,0 mm a 0,1 mm",
-          "De 0,5 mm a 0,45 mm",
-          "De 0,22 mm a 0,33 mm"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Per què no es pot continuar aprimant indefinidament un envàs de qualsevol material (límit tècnic)?",
-        "opcions": [
-          "Perquè si l'envàs falla es perd el producte sencer, que té molt més impacte ambiental que l'envàs",
-          "Perquè ho prohibeix la normativa de transports",
-          "Perquè els proveïdors no volen vendre menys material",
-          "Perquè les etiquetes no s'hi enganxarien"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin sistema de gestió va substituir el clàssic SIG (Ecoembes) arran del RD 1055/2022?",
-        "opcions": [
-          "El règim de Responsabilitat Ampliada del Productor (RAP)",
-          "El sistema de cremació directa",
-          "El xec d'abocador",
-          "La Directiva 1994"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quines són les tres opcions que té una empresa per complir amb la RAP segons el RD 1055/2022?",
-        "opcions": [
-          "SCRAP, SIRAP o SDDR",
-          "SIG, ISO o UNE",
-          "PEFC, FSC o PET",
-          "DWI, DRD o ECCS"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Què és la DAE?",
-        "opcions": [
-          "La Declaració Anual d'Envasos que han de presentar els agents econòmics",
-          "El Decret Ambiental d'Ecodisseny",
-          "El Disseny d'Ampolles Ecològiques",
-          "La Directiva d'Afluència d'Envasats"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina taxa de reciclatge d'envasos domèstics es va assolir a Espanya el 2024?",
-        "opcions": [
-          "76,3%",
-          "45,0%",
-          "99,9%",
-          "25,1%"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és el principi fonamental de la Responsabilitat Ampliada del Productor (RAP)?",
-        "opcions": [
-          "Qui posa l'envàs al mercat n'assumeix el cost íntegre de recollida, transport i tractament",
-          "El consumidor ha de pagar un impost al supermercat per cada bossa",
-          "L'Estat paga el 100% de la recollida de residus amb fons públics",
-          "Els fabricants de maquinària han de recollir les caixes buides"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin concepte descriu una economia on el valor dels productes i materials es manté el màxim temps possible reduint al mínim els residus?",
-        "opcions": [
-          "Economia circular",
-          "Economia lineal",
-          "Economia de subsistència",
-          "Economia especulativa"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com modul·len els SCRAPs la tarifa del 'Punt Verd' que paguen les empreses per cada envàs?",
-        "opcions": [
-          "Segons com de reciclable sigui l'envàs (ecomodulació)",
-          "Segons el país d'origen del dissenyador",
-          "Segons el nombre de colors de la foto",
-          "És una tarifa fixa idèntica per a tots els materials"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és el protocol internacional de simulación de cicle de transport complet per a envasos?",
-        "opcions": [
-          "Protocol ISTA",
-          "Codi FEFCO",
-          "Norma UNE 15343",
-          "Directiva 94/62"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin percentatge de reducció de pes han experimentat els briks d'1 litre durant la primera dècada dels 2000?",
-        "opcions": [
-          "Un 4%",
-          "Un 25%",
-          "Un 50%",
-          "Un 0%"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin indicador mesura l'aire que transportem en un envàs?",
-        "opcions": [
-          "Ràtio producte/envàs (relació entre volum útil i volum total)",
-          "Indicador Kr/Kp",
-          "Grau de reciclabilitat",
-          "Petjada de carboni"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és l'objectiu del PPWR respecte als graus de reciclabilitat dels envasos per a l'any 2038?",
-        "opcions": [
-          "Només es permetran els envasos amb grau A o B",
-          "Es permetran tots els graus de l'A a la E",
-          "Es prohibirà qualsevol envàs que no sigui de vidre",
-          "S'eliminaran les etiquetes de reciclatge"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina substància química queda estrictament limitada en els envasos pel reglament europeu PPWR?",
-        "opcions": [
-          "Substàncies PFAS",
-          "Cel·lulosa",
-          "Diòxid de silici",
-          "Carbonat càlcul"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quants contenidors de recollida separada blau i groc hi havia aproximadament a Espanya el 2024?",
-        "opcions": [
-          "Més de 671.000 contenidors",
-          "10.000 contenidors",
-          "5.000.000 de contenidors",
-          "100.000 contenidors"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és el volum total de producció de plats preparats a Espanya consumits a la llar el 2021?",
-        "opcions": [
-          "654.614 tones",
-          "10.000 tones",
-          "5 milions de tones",
-          "100.000 tones"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin problema ambiental presenta l'ús generalitzat de racions individuals o precuinats?",
-        "opcions": [
-          "Multiplica la superfície d'envàs primari per unitat de producte consumit",
-          "Prohibeix el reciclatge de cartró",
-          "Fa augmentar la pesadesa del vidre",
-          "Disminueix la venda en línia"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Què representa l'indicador de 'petjada de carboni'?",
-        "opcions": [
-          "Kg de CO₂ equivalent per unitat funcional obtingut mitjançant un ACV",
-          "L'àrea de plàstic que cobreix el lineal",
-          "El pes del palet de fusta",
-          "El nombre d'arbres tancats"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina és la regla pràctica d'ecodisseny per assegurar una bona classificació de reciclabilitat segons el PPWR?",
-        "opcions": [
-          "Dissenyar envasos monomaterial i evitar combinacions difícils de separar",
-          "Barrejar plàstic, cartró i metall en una sola capa no separable",
-          "Utilitzar sempre vernissos no solubles",
-          "Afegir capes de plom per protegir el contingut"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina és la funció de la norma UNE-EN 15343?",
-        "opcions": [
-          "Acreditar la traçabilitat i el contingut de plàstic reciclat",
-          "Mesurar la resistència del cartró corrugat",
-          "Definir els codis FEFCO de les caixes",
-          "Regular el disseny d'ampolles de vidre"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és l'objectiu de prevenció del PPWR per als anys 2030 i 2040?",
-        "opcions": [
-          "Desacoblar el creixement econòmic de la generació de residus d'envasos",
-          "Incrementar un 50% el pes dels envasos",
-          "Prohibir el transport de mercaderies",
-          "Substituir tots els contenidors grocs per blaus"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin material d'envàs domèstic va registrar la major quantitat de tones reciclades a Espanya el 2024?",
-        "opcions": [
-          "Paper i cartró (765.576 t)",
-          "Plàstic (589.885 t)",
-          "Acer (122.308 t)",
-          "Fusta (5.455 t)"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com es defineix un sistema SDDR?",
-        "opcions": [
-          "Sistema de Dipòsit, Devolució i Retorn on el consumidor paga un dipòsit que recupera en retornar l'envàs",
-          "Sistema Digital de Disseny Ràpid",
-          "Servei Directe de Distribució Regional",
-          "Subvenció Directa per a Envasos Reciclats"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Què implica la prioritat de la jerarquia de residus europeus?",
-        "opcions": [
-          "Primer la prevenció, seguida de la reutilització i el reciclatge",
-          "Primer la cremació amb recuperació energètica",
-          "Primer l'abocador controlat",
-          "Primer la importació de residus"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quines són les tres fases principals de la metodologia de disseny d'envasos?",
-        "opcions": [
-          "Fase 1: Analítico-conceptual, Fase 2: Tècnico-creativa, Fase 3: Avaluació",
-          "Fase 1: Impressió, Fase 2: Plegat, Fase 3: Encofrat",
-          "Fase 1: Venda, Fase 2: Ús, Fase 3: Devolució",
-          "Fase 1: Pesat, Fase 2: Mesurat, Fase 3: Llençat"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és l'objectiu principal de la Fase 1 (Analítico-conceptual)?",
-        "opcions": [
-          "Recopilar dades, determinar atributs del producte i delimitar l'espai de joc abans de dibuixar",
-          "Fabricar la mostra definitiva amb el motlle de fàbrica",
-          "Fer les proves de caiguda lliure al laboratori",
-          "Imprimir 500.000 unitats per al lineal"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quins factors analitza la Fase 1 en l'àrea estructural de l'envàs?",
-        "opcions": [
-          "Material, protecció, producció, logística i ús",
-          "Només el color corporatiu de la marca",
-          "El nom del dissenyador gràfic",
-          "La tipografia i la foto de la mascota"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és el punt òptim en els factors econòmics del disseny d'embalatge?",
-        "opcions": [
-          "On la suma del cost del packaging i el cost del dany en el producte és MÍNIMA",
-          "On l'envàs costa 0 euros sense importar els danys",
-          "On s'utilitza el màxim de material possible per evitar danys",
-          "On el transport es fa exclusivament per avió"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quines activitats s'inclouen en la Fase 2 (Tècnico-creativa)?",
-        "opcions": [
-          "Esbossos, selecció, documentació tècnica 2D/3D i prototipatge",
-          "Anàlisi de la llei de residus i declaració anual DAE",
-          "Assajos de caiguda lliure i cicle ISTA",
-          "Investigació de mercat del preu del petroli"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin nivell de prototip es fa de cartró o escuma i serveix per validar mides, ergonomia i presència al lineal?",
-        "opcions": [
-          "Maqueta de volum",
-          "Prototip d'aspecte",
-          "Prototip funcional",
-          "Mostra de fàbrica"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin nivell de prototip es fabrica amb el procés i el motlle definitius i és l'únic que valida la producció real?",
-        "opcions": [
-          "Mostra de fàbrica",
-          "Maqueta de volum",
-          "Prototip d'aspecte",
-          "Prototip funcional"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin nivell de prototip valida l'obertura, la dosificació i l'estanquitat utilitzant el material i tancament reals?",
-        "opcions": [
-          "Prototip funcional",
-          "Maqueta de volum",
-          "Prototip d'aspecte",
-          "Mostra de fusteria"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quins assajos de laboratori s'inclouen en la Fase 3 d'avaluació tècnica?",
-        "opcions": [
-          "Caiguda lliure, compressió (ECT), vibració i barrera (WVTR/OTR)",
-          "Test d'impressió digital i colorimetria RGB",
-          "Pesat de palets i comptatge de treballadors",
-          "Càlcul de la llicència d'obertura"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quines sigles mesuren el pas de vapor d'aigua i d'oxigen a través de films i laminats?",
-        "opcions": [
-          "WVTR (vapor d'aigua) i OTR (oxigen)",
-          "ECT i ISTA",
-          "DWI i DRD",
-          "PPWR i RAP"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina eina d'avaluació amb el consumidor mesura on va la mirada primer en un lineal?",
-        "opcions": [
-          "Eye tracking (seguiment ocular)",
-          "Assaig ECT",
-          "Prototip de volum",
-          "Briefing de disseny"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Què és el briefing en un projecte de packaging?",
-        "opcions": [
-          "El document i punt de partida del projecte que conté els objectius, target, dades tècniques, calendari i costos",
-          "La factura final emesa pel fabricant de motlles",
-          "El certificat de reciclament emès per l'administració",
-          "El plànol 3D creat en el software de CAD"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quins són els components de l'estructura base d'un briefing?",
-        "opcions": [
-          "Descripció de marca, target/consumidors, mercat, competència, comunicació, objectius de disseny i informació tècnica",
-          "Llista de proveïdors, factures, horaris de transport i sous",
-          "Nom del dissenyador, programes utilitzats i ordinador emprat",
-          "Codi de barres, pes net, data de caducitat i preu de cost"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com es detecta un briefing fluix o deficient?",
-        "opcions": [
-          "Conté instruccions ambigües com 'volem alguna cosa moderna' o 'el pressupost ja el veurem'",
-          "Inclou dades tècniques de cost objectiu per unitat i M de tirada",
-          "Especifica la data exacta de validació de la mostra de fàbrica",
-          "Defineix clarament el percentatge de plàstic reciclat exigit"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quines poden ser fonts d'inspiració per a un dissenyador de packaging?",
-        "opcions": [
-          "La pluja d'idees estructurada, la història del producte, corrents artístics i la natura",
-          "Només el disseny de la competència directa",
-          "Les tarifes d'impostos de l'any anterior",
-          "Els codis FEFCO de les caixes corrugades"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quins són els dos criteris bàsics per a la selecció de conceptes de disseny?",
-        "opcions": [
-          "Quin disseny compleix més requisits del briefing i com es preveu que reaccioni el públic objectiu",
-          "Quin disseny és el més car i quin utilitza més tintes",
-          "Quin disseny agrada més al fill del director de l'empresa",
-          "Quin disseny es pot dibuixar més ràpidament"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és un error freqüent en el procés de disseny d'envasos?",
-        "opcions": [
-          "Saltar-se la Fase 1 i anar directament a dibuixar",
-          "Demandar un briefing amb dades clares de pressupost",
-          "Realitzar assajos de caiguda lliure abans de la producció massiva",
-          "Validar la maqueta de volum amb usuaris reals"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quants factors intervenen en el context d'un projecte de packaging segons el Tema 4?",
-        "opcions": [
-          "9 factors",
-          "3 factors",
-          "15 factors",
-          "2 factors"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin assaig de laboratori mesura la resistència de la vora del cartró ondulat a la compressió?",
-        "opcions": [
-          "Assaig ECT (Edge Crush Test)",
-          "Assaig OTR",
-          "Assaig WVTR",
-          "Test de lineal"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "En quin entorn es troba el projecte de disseny segons els dos eixos del context?",
-        "opcions": [
-          "Entre diferenciar-se per atribut/informació i invertir en disseny/contenir cost",
-          "Entre el mercat local i el comerç espacial",
-          "Entre l'ús de vidre o l'ús de metall",
-          "Entre la impressió digital i la litografia"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Per què el disseny de packaging és un treball interdepartamental?",
-        "opcions": [
-          "Perquè cap decisió és només estètica: tota forma té conseqüències tècniques, logístiques i econòmiques",
-          "Perquè ho exigeix el ministeri d'indústria",
-          "Perquè el dissenyador no sap utilitzar programes de 3D",
-          "Perquè només es fa en grans multinacionals"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin factor del context fa referència al ritme de producció molt ràpid que exigeix optimitzar processos?",
-        "opcions": [
-          "Time to market",
-          "Redisseny",
-          "Distribució comercial",
-          "Factors socioculturals"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com s'avalua la credibilitat com a criteri específic de selecció d'un concepte?",
-        "opcions": [
-          "Si el disseny encaixa al sector i no queda fora de context",
-          "Si el logotip ocupa més del 80% de la superfície",
-          "Si s'utilitza una tipografia de fantasia",
-          "Si el preu de venda és el més elevat del mercat"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin prototip es realitza amb impressió 3D pintada o vinil aplicat per validar la percepció visual i el gràfic?",
-        "opcions": [
-          "Prototip d'aspecte",
-          "Maqueta de volum",
-          "Prototip funcional",
-          "Mostra de fàbrica"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Per què no s'ha de validar un disseny només amb el client sinó també amb l'usuari?",
-        "opcions": [
-          "Perquè qui aprova el disseny (client) no és necessàriament qui l'obrirà i utilitzarà cada dia (usuari)",
-          "Perquè el client no paga el projecte",
-          "Perquè l'usuari és qui fabrica el motlle",
-          "Perquè ho prohibeix el codi FEFCO"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Què passa quan es deixen els assajos tècnics per al final del procés?",
-        "opcions": [
-          "Si l'envàs no supera la caiguda, cal tornar enrere i redissenyar la geometria perdent temps i diners",
-          "S'estalvia el 100% del cost de producció",
-          "El producte es ven directament sense cap problema",
-          "S'obté automàticament el grau A del PPWR"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "En quines condicions s'ha de dur a terme el redisseny d'un envàs existent?",
-        "opcions": [
-          "Pels riscos que comporta (tradició vs modernitat), només quan hi ha consens intern",
-          "Cada dos mesos de manera obligatòria",
-          "Només quan canvia el dissenyador gràfic",
-          "Quan el proveïdor de paper augmenta el preu"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és el darrer pas de la seqüència del desenvolupament de conceptes abans de la producció?",
-        "opcions": [
-          "Presentacions finals",
-          "Idees i conceptualització",
-          "Maquetes i prototips",
-          "Selecció"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com influeixen els factors socioculturals en el disseny de l'envàs?",
-        "opcions": [
-          "Condicionen la forma, textura, color, símbols, tancament, dosificació i quantitat de l'envàs",
-          "Només decideixen la llengua en què s'escriu el text legal",
-          "No tenen cap influència en el packaging",
-          "Determinen la velocitat de la màquina d'envasat"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin nom rep l'assaig que simula les freqüències del transport per carretera, tren, vaixell o avió?",
-        "opcions": [
-          "Assaig de vibració",
-          "Assaig de caiguda lliure",
-          "Assaig de compressió",
-          "Assaig de barrera"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina diferència hi ha entre els protocols ASTM i ISTA en assajos de transport?",
-        "opcions": [
-          "ASTM aïlla forces concretes per comparar materials; ISTA simula el viatge sencer per validar l'enviament",
-          "ASTM és per a vidre i ISTA és per a plàstic",
-          "ISTA és obligatori a Àsia i ASTM a Europa",
-          "Són dues sigles que identifiquen el mateix tipus de cartró"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin percentatge del total de la facturació de packaging representa el cartró?",
-        "opcions": [
-          "Aproximadament un terç (1/3)",
-          "El 95%",
-          "Menys del 2%",
-          "El 75%"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "En quin moment del procés d'impressió gràfica sobre cartró s'incorpora el disseny?",
-        "opcions": [
-          "Sobre el pla del troquel, mai al revés",
-          "Abans de conèixer les mides del producte",
-          "Després de fabricar totes les caixes i enganxar-les",
-          "Directament sobre el palet precintat"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "On i quan apareixen els primers usos del paper com a envàs?",
-        "opcions": [
-          "A l'Àsia cap al segle II a.C.",
-          "A Europa al segle XVIII",
-          "A Amèrica el 1900",
-          "A Egipte el 4.000 a.C."
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Qui va patentar el 1798 la primera màquina de paper contínua de taula plana?",
-        "opcions": [
-          "Nicholas-Louis Robert",
-          "Robert Gair",
-          "Erik Wallenberg",
-          "Nicolas Appert"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin descobriment accidental va fer Robert Gair al segle XIX?",
-        "opcions": [
-          "Que es pot tallar i marcar el cartró en una sola operació (naixement de la caixa plegable)",
-          "Que el paper resisteix l'aigua si es mulla amb oli",
-          "Que el cartró corrugat es pot fabricar amb alumini",
-          "La invenció del brik de llet"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és el consum mitjà de cartró per habitant i any a Espanya segons dades d'AFCO (2025)?",
-        "opcions": [
-          "61,02 kg",
-          "12,5 kg",
-          "150 kg",
-          "5 kg"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin sector d'activitat concentra la major part de la demanda de cartró ondulat a Espanya (61%)?",
-        "opcions": [
-          "La indústria alimentària",
-          "L'electrònica",
-          "El sector del calçat",
-          "La farmàcia"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quins són els tres processos d'obtenció de pasta de fusta per a fabricar paper?",
-        "opcions": [
-          "Mecànic, Químic i Semi-químic",
-          "Físic, Térmic i Quàntic",
-          "Sec, Humit i Pressuritzat",
-          "Directe, Indirecte i Reciclat"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com s'anomena el procés químic d'obtenció de pasta més habitual, que produeix el paper Kraft?",
-        "opcions": [
-          "Procés al sulfat (Kraft)",
-          "Procés a la sosa",
-          "Procés al sulfit",
-          "Procés mecànic de pedra"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quantes vegades es pot reciclar aproximadament una fibra de cel·lulosa abans de ser massa curta?",
-        "opcions": [
-          "Unes 5–7 vegades",
-          "Infinites vegades",
-          "Només 1 vegada",
-          "20–25 vegades"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin tipus de paper és molt dens, resistent als greixos i s'utilitza per a embolcalls i segells de garantia?",
-        "opcions": [
-          "Paper Glassine",
-          "Paper Kraft",
-          "Paper Tissue",
-          "Paper encerat"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin tipus de paper destaca per la seva resistència a la humitat, greixos i olis, sent ideal per a mantega i formatges?",
-        "opcions": [
-          "Pergamí vegetal",
-          "Paper Tissue",
-          "Paper kraft",
-          "Cartró xip"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és el pes màxim que pot suportar un sac de paper industrial?",
-        "opcions": [
-          "De 11,5 a 100 kg",
-          "Fins a 2 kg",
-          "Exactament 500 kg",
-          "Sense cap límit"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "A partir de quina gramatura un material de cel·lulosa es considera cartró i no paper?",
-        "opcions": [
-          "A partir de 65 g/m²",
-          "A partir de 500 g/m²",
-          "A partir de 10 g/m²",
-          "A partir de 1.000 g/m²"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com està conformat el cartró corrugat o ondulat?",
-        "opcions": [
-          "Per una o més làmines planes (liner) combinades amb una o més capes ondulades (flauta)",
-          "Per tres capes de plàstic i una d'alumini",
-          "Per fusta premsada amb resina epoxi",
-          "Per una sola fulla de paper kraft gruixut"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina flauta de cartró corrugat té la major alçada (~4,7 mm) i ofereix el màxim esmorteïment?",
-        "opcions": [
-          "Flauta A",
-          "Flauta C",
-          "Flauta B",
-          "Flauta E (Microcanal)"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina flauta de cartró corrugat és la més utilitzada en caixes de transport per la seva bona relació resistència/cost?",
-        "opcions": [
-          "Flauta C",
-          "Flauta A",
-          "Flauta F",
-          "Flauta E"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina flauta rep el nom de microcanal (~1,6 mm) i substitueix el cartró compacte en envasos de venda?",
-        "opcions": [
-          "Flauta E",
-          "Flauta A",
-          "Flauta C",
-          "Flauta D"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "En el codi FEFCO, quina sèrie correspon a les caixes de solapes (com la clàssica caixa RSC 0201)?",
-        "opcions": [
-          "Sèrie 02",
-          "Sèrie 03",
-          "Sèrie 04",
-          "Sèrie 07"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina sèrie del codi FEFCO identifica els accessoris interiors com separadors, encoixinats i falques?",
-        "opcions": [
-          "Sèrie 09",
-          "Sèrie 02",
-          "Sèrie 05",
-          "Sèrie 01"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin tipus de cartró té una gramatura de 200–400 g/m² i s'utilitza per a caixes petites de farmàcia, cosmètica i alimentació seca?",
-        "opcions": [
-          "Cartró plegadís (FBB)",
-          "Cartró corrugat triple",
-          "Cartró compacte de 600 g/m²",
-          "Paper kraft de 50 g/m²"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "En el pla de troquelat de cartró, de quin color es marquen tradicionalment les línies de tall i les de plegat?",
-        "opcions": [
-          "Línies de tall en magenta i línies de plegat en verd",
-          "Línies de tall en negre i de plegat en vermell",
-          "Línies de tall en blau i de plegat en groc",
-          "Totes les línies en blanc"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin element afegit al cartró dificulta molt la separació de les fibres en el procés de reciclatge?",
-        "opcions": [
-          "Laminats plàstics (com un film de PE)",
-          "Impressió amb aigua",
-          "Plegat mecànic",
-          "L'ús de la flauta C"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Per què una caixa de pizza tacada de greix perd valor per al reciclatge?",
-        "opcions": [
-          "Perquè el greix impedeix que les fibres de cel·lulosa formin un full nou en l'aigua",
-          "Perquè el greix fa augmentar el pes i paga més impost",
-          "Perquè crema la màquina de paper",
-          "Perquè canvia el codi FEFCO de la caixa"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina és la funció de la flauta F en el cartró corrugat?",
-        "opcions": [
-          "És una flauta molt fina per a packaging premium i formats petits amb bona qualitat d'impressió",
-          "És la flauta més gruixuda per a caixes de 500 kg",
-          "S'utilitza exclusivament per a sacs de ciment",
-          "És una flauta impermeable per a líquids"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin avantatge tenen les caixes plegables de cartró en la logística?",
-        "opcions": [
-          "Es poden emmagatzemar i transportar en pla, reduint el volum ocupat abans del muntatge",
-          "Són 100% resistents al foc i a l'àcid clorhídric",
-          "No necessiten cap tipus de troquel per a fabricar-se",
-          "Pesen més que les caixes de fusta"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Per què el cartró ondulat necessita sempre una entrada de fibra verge en el circuit de producció?",
-        "opcions": [
-          "Perquè cada cicle de reciclatge escurça les fibres i perden resistència mecànica",
-          "Perquè la llei prohibeix utilitzar més d'un 10% de reciclat",
-          "Perquè la fibra recollida canvia de color verd a blau",
-          "Perquè si no es mulla no es pot plegar"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina és la composició bàsica del vidre d'envàs?",
-        "opcions": [
-          "Sorra (sílice) + sosa càustica + pedra calcària",
-          "Plàstic PET + alumini + sofre",
-          "Cel·lulosa + estany + ferro",
-          "Argila + guix + aigua"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quins són els dos principals inconvenients del vidre com a material d'envàs?",
-        "opcions": [
-          "Fragilitat davant impactes/xoc tèrmic i pes elevat que penalitza el transport",
-          "Poca inèrcia química i toxicitat",
-          "Incapacitat de ser reciclat i opacitat",
-          "Baixa resistència tèrmica fins a 50 °C"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "A quina temperatura aproximada es fon la barreja de matèries primeres per fabricar vidre?",
-        "opcions": [
-          "1.500 °C",
-          "500 °C",
-          "3.000 °C",
-          "100 °C"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin mètode de conformat de vidre s'utilitza per a recipients de BOCA AMPLA com pots i gerres?",
-        "opcions": [
-          "Premsat – bufat",
-          "Bufat – bufat",
-          "DWI",
-          "Extrusió buida"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin mètode de conformat de vidre s'utilitza per a recipients de BOCA ESTRETA com les ampolles?",
-        "opcions": [
-          "Bufat – bufat",
-          "Premsat – bufat",
-          "Injecció – buit",
-          "DRD"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina és la funció del procés de recuit (annealing) en la fabricació de vidre?",
-        "opcions": [
-          "Reescalfar l'envàs i refredar-lo de manera controlada per eliminar tensions internes",
-          "Donar color verd o marró a l'ampolla",
-          "Gravat del codi de barres al fons",
-          "Esterilitzar l'ampolla abans de l'envasat"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina part de l'anatomia d'un envàs de vidre comprèn la superfície de segellat, el fil continu o la corona?",
-        "opcions": [
-          "La boca o corona",
-          "El coll",
-          "El taló",
-          "La concavitat"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin color de vidre ofereix la major protecció contra la llum (en la longitud d'ona de 2.900 a 4.500 Å)?",
-        "opcions": [
-          "Color ambre",
-          "Color transparent (incolor)",
-          "Color esmeralda",
-          "Color blau intens"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com es defineix el color d'un envàs de vidre durant la seva fabricació?",
-        "opcions": [
-          "Afegint òxids metàl·lics directament a la barreja fos al forn",
-          "Pintant la paret exterior amb un vinil",
-          "Mitjançant un vernís epoxi interior",
-          "Submergint l'ampolla en tint quan està freda"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina és la dada de pes mitjà assolida per primera vegada a Europa el 2024 per a una ampolla de vi tranquil?",
-        "opcions": [
-          "Menys de 450 g",
-          "Més de 1.200 g",
-          "Exactament 100 g",
-          "2,5 kg"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Què és el casc de vidre (cullet)?",
-        "opcions": [
-          "El vidre trencat recuperat que torna al forn per a ser refós",
-          "La tapa de metall que tanca el pot",
-          "El defecte visual de la junta del motlle",
-          "El sorra de sílice abans de fondre"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin estalvi energètic s'aconsegueix al forn per cada 10% de casc de vidre afegit?",
-        "opcions": [
-          "Aproximadament un 2,5% de reducció del consum energètic",
-          "Un 50% d'estalvi directe",
-          "Un 0% d'estalvi",
-          "Un 95% d'estalvi"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina taxa de recollida selectiva de vidre es va assolir a la Unió Europea el 2024?",
-        "opcions": [
-          "82,2%",
-          "30%",
-          "50%",
-          "99%"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin tipus de materials llensats per error al contenidor verd d'envàs de vidre arruïnen els lots per fondre a diferent temperatura?",
-        "opcions": [
-          "Ceràmica, porcellana i vidre pla de finestres",
-          "Tapes d'acer estanyat",
-          "Paper d'etiquetes",
-          "Dops de suro"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "En la segona elaboració de vidre, quins recipients s'utilitzen habitualment per a anestèsia odontològica?",
-        "opcions": [
-          "Càrpules",
-          "Ampolletes de 50 ml",
-          "Flascons de 100 ml",
-          "Ampollons"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quins són els tres modes principals de trencament d'un envàs de vidre?",
-        "opcions": [
-          "Xoc tèrmic, pressió interna i impacte",
-          "Corrosió, rovellat i desgast",
-          "Dilatació, evaporació i fusió",
-          "Capa d'oli, soldadura i engatillat"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin avantatge únic té el vidre respecte a la barrera contra gassos i vapors?",
-        "opcions": [
-          "És l'única barrera realment absoluta i permanent (no deixa passar oxigen ni vapor d'aigua)",
-          "Deixa respirar el vi a través dels seus porus",
-          "Absorbeix l'aigua de l'ambient",
-          "Es torna flexible quan es mulla"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina part del pot o ampolla de vidre porta gravat el número de motlle i el logotip del fabricant per traçar defectes?",
-        "opcions": [
-          "El fons de l'envàs",
-          "La corona o boca",
-          "El coll exterior",
-          "L'etiqueta de paper"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina és la raó per la qual el vidre s'utilitza de forma dominant en productes de gamma alta com vins, licors i perfumeria?",
-        "opcions": [
-          "La percepció de qualitat transmesa pel pes, el so i la transparència",
-          "Perquè és el material més barat de fabricar",
-          "Perquè pesa menys que el plàstic",
-          "Perquè no es trenca quan cau a terra"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin percentatge del vidre recollit a Europa es recicla en circuit tancat?",
-        "opcions": [
-          "85%",
-          "20%",
-          "50%",
-          "100%"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com es compensa l'alleugeriment de pes d'una ampolla de vidre per mantenir la resistència mecànica?",
-        "opcions": [
-          "Redistribuint el material: reforçant l'espatlla i el taló i aprimant la paret lateral",
-          "Afegint una capa de cartró exterior",
-          "Pintant el vidre de marró ambre",
-          "Augmentant el diàmetre de la boca"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin tipus d'envàs de vidre té el mateix diàmetre de boca que de cos i una capacitat fins a 1 litre aproximadament?",
-        "opcions": [
-          "Pots (tarros)",
-          "Ampolles",
-          "Gots",
-          "Ampollons"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina propietat del vidre permet sotmetre l'envàs a l'autoclau i rentats a alta temperatura per a la seva reutilització?",
-        "opcions": [
-          "Resistència tèrmica i possibilitat d'esterilització",
-          "Malleabilitat en fred",
-          "Baixa densitat",
-          "Absorció de la llum UV"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Qui va publicar 'L'art de conservar' el 1810 demostrant que els aliments escalfats en recipients tancats es conserven durant mesos?",
-        "opcions": [
-          "Nicolas Appert",
-          "Peter Durand",
-          "Ermal Fraze",
-          "Nicholas-Louis Robert"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Qui va patentar el 1810 a Anglaterra l'ús de recipients de ferro estanyat per a conservar aliments?",
-        "opcions": [
-          "Peter Durand",
-          "Nicolas Appert",
-          "Raymond Loewy",
-          "Erik Wallenberg"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quants anys van passar des de la patent de la llauna de conserva (1810) fins a la invenció de l'obrellaunes (1855)?",
-        "opcions": [
-          "45 anys (s'obrien amb martell i escarpra)",
-          "2 anys",
-          "100 anys",
-          "Es va inventar el mateix dia"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina marca va llançar el 1935 la primera cervesa en llauna d'acer estanyat?",
-        "opcions": [
-          "Krueger Beer",
-          "Coca-Cola",
-          "Pepsi",
-          "Budweiser"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin invent d'Ermal Fraze comercialitzat el 1963 va permetre obrir les llaunes de beguda sense cap eina externa?",
-        "opcions": [
-          "L'anella d'estirar (easy-open)",
-          "La tapa de rosca",
-          "El Pop Top Can",
-          "La soldadura de plom"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina millora es va introduir el 1975 en les llaunes de beguda per evitar abandonar l'anella a terra?",
-        "opcions": [
-          "L'anella no separable (stay-on tab)",
-          "La tapa de suro",
-          "El tap de vidre",
-          "La làmina de paper encerat"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quines són les 5 capes que formen la fullola d'estany (Tinplate) des de l'exterior cap a l'acer base?",
-        "opcions": [
-          "Pel·lícula d'oli, pel·lícula de passivació (crom), estany lliure, aliatge FeSn₂ i acer base",
-          "Plàstic, alumini, coure, ferro i zinc",
-          "Vernís, paper, cartró, film i cola",
-          "Pintura, níquel, plom, acer i coure"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina és la diferència entre la fullola d'estany (Tinplate) i l'acer TFS (ECCS)?",
-        "opcions": [
-          "En el TFS l'estany es substitueix per una doble capa de crom metàl·lic i òxid de crom",
-          "El TFS està fet d'alumini pur",
-          "El TFS no conté acer",
-          "El Tinplate no es pot utilitzar en conserves"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina és la densitat de l'alumini respecte a la de l'acer de packaging?",
-        "opcions": [
-          "2,7 g/cm³ (alumini) contra 7,8 g/cm³ (acer) - un terç del pes",
-          "Són exactament igual de densos",
-          "L'alumini és 10 vegades més dens",
-          "L'acer flota en l'aigua"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin procés de fabricació de llaunes de dues peces aprima la paret lateral deixant-la molt més prima que el fons?",
-        "opcions": [
-          "Procés DWI (Drawn and Wall Ironed)",
-          "Procés DRD (Draw and Redraw)",
-          "Procés de 3 peces soldat",
-          "Procés de premsat-bufat"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin procés de dues peces manté el gruix de la paret constant i s'utilitza per a conserves que han de resistir el buit?",
-        "opcions": [
-          "Procés DRD (Draw and Redraw)",
-          "Procés DWI",
-          "Procés de soldadura elèctrica",
-          "Procés d'extrusió d'oli"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com s'anomena la unió mecànica entre el cos i la tapa d'una llauna metàl·lica que en garanteix l'hermeticitat?",
-        "opcions": [
-          "Engatillat o doble tancament (double seam)",
-          "Soldadura per làser",
-          "Retoc de vernís",
-          "Enganxat tèrmic"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "En quin tipus de contenidors o envasos metàl·lics un disc d'alumini es converteix en tub d'un sol cop amb un punxó sense costures?",
-        "opcions": [
-          "Tubs col·lapsibles (d'extrusió d'alumini)",
-          "Llaunes de 3 peces",
-          "Aerosols d'acer de 3 peces",
-          "Caixes corrugades"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "A partir de quina data entra en vigor la prohibició total de l'ús de Bisfenol A (BPA) en materials en contacte amb aliments a la UE (Reglament 2024/3190)?",
-        "opcions": [
-          "20 de gener de 2025",
-          "12 d'agost de 2026",
-          "1 de gener de 2030",
-          "31 de desembre de 2028"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és l'estalvi d'energia que s'aconsegueix en produir alumini a partir de ferralla reciclada en lloc de bauxita verge?",
-        "opcions": [
-          "Un 95% d'estalvi energètic",
-          "Un 10%",
-          "Un 50%",
-          "Un 25%"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és el pes mitjà aproximat d'una llauna d'alumini de beguda de 33 cl actualment?",
-        "opcions": [
-          "≈ 13 g",
-          "≈ 85 g",
-          "≈ 200 g",
-          "≈ 2 g"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és el material d'envàs més reciclat a Espanya gràcies a la facilitat de la separació magnètica?",
-        "opcions": [
-          "L'acer",
-          "L'alumini",
-          "El vidre ambre",
-          "El polietilè"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Com se separen les llaunes d'alumini de la resta de residus a les plantes de selecció?",
-        "opcions": [
-          "Mitjançant corrents induïts (corrents de Foucault)",
-          "Amb imants magnètics clàssics",
-          "Mitjançant flotació en aigua salada",
-          "A mà una per una"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quina particularitat té la decoració gràfica de la majoria d'envasos metàl·lics?",
-        "opcions": [
-          "El metall es decora / imprimeix normalment en pla abans de conformar la llauna",
-          "Es pinta a mà amb acrílics un cop plena",
-          "Només es pot utilitzar paper enganxat amb cola",
-          "Es grava amb un gravador de fusta"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin diàmetre té el format de llauna de beguda estàndard de 33 cl a Europa?",
-        "opcions": [
-          "66 mm",
-          "53 mm",
-          "58 mm",
-          "100 mm"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és el temps aproximat que pot trigar una llauna de beguda reciclada a tornar al lineal com a nova llauna?",
-        "opcions": [
-          "60 dies",
-          "10 anys",
-          "365 dies",
-          "1 dia"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és un dels principals avantatges dels tubs col·lapsibles d'alumini en cosmètica i farmàcia?",
-        "opcions": [
-          "Es deformen sense recuperar la forma, evitant que entre aire a mesura que es buiden",
-          "Són transparents i permeten veure la crema",
-          "Es poden utilitzar al microones",
-          "No necessiten cap tancament ni tap"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "Quin és el percentatge d'estalvi energètic aproximat en el reciclatge de l'acer d'envàs respecte a la seva producció verge?",
-        "opcions": [
-          "Al voltant del 70%",
-          "Un 10%",
-          "Un 95%",
-          "Un 0%"
-        ],
-        "correcta": 0
-      },
-      {
-        "pregunta": "En quin sector és crític l'ús del vidre per la seva inèrcia química total i absència de migració de substàncies?",
-        "opcions": [
-          "Alimentació, farmàcia i cosmètica",
-          "Construcció d'habitatges",
-          "Fabricació de pneumàtics",
-          "Sectors de siderúrgia pesada"
-        ],
-        "correcta": 0
-      }
-    ];
-
-    // State Variables
-    let questionBank = [...DEFAULT_QUESTIONS];
-    let activeQuizQuestions = [];
-    let currentIndex = 0;
-    let correctCount = 0;
-    let incorrectCount = 0;
-    let hasAnsweredCurrent = false;
-
-    // Load stored questions from LocalStorage if available
-    function initApp() {
-      const saved = localStorage.getItem('dgc_minimal_quiz_data');
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            questionBank = parsed;
-          }
-        } catch(e) {
-          console.error("Error carregant dades des de localStorage", e);
-        }
-      }
-      updateAllCountLabel();
-    }
-
-    function updateAllCountLabel() {
-      document.getElementById('allCountLabel').innerText = `${questionBank.length} preguntes`;
-    }
-
-    // Fisher-Yates Shuffle
-    function shuffle(arr) {
-      const array = [...arr];
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-
-    // Start Quiz
-    function startQuiz(amount) {
-      currentIndex = 0;
-      correctCount = 0;
-      incorrectCount = 0;
-
-      // Shuffle options and questions
-      let prepared = questionBank.map(q => {
-        const optionsObj = q.opcions.map((opt, i) => ({ text: opt, isCorrect: i === q.correcta }));
-        const shuffledOpts = shuffle(optionsObj);
-        return {
-          pregunta: q.pregunta,
-          opcions: shuffledOpts.map(o => o.text),
-          correctaIndex: shuffledOpts.findIndex(o => o.isCorrect)
-        };
-      });
-
-      prepared = shuffle(prepared);
-
-      if (amount === 'all') {
-        activeQuizQuestions = prepared;
-      } else {
-        activeQuizQuestions = prepared.slice(0, Math.min(amount, prepared.length));
-      }
-
-      document.getElementById('homeScreen').classList.add('hidden');
-      document.getElementById('summaryScreen').classList.add('hidden');
-      document.getElementById('quizScreen').classList.remove('hidden');
-
-      renderQuestion();
-    }
-
-    // Render Current Question
-    function renderQuestion() {
-      hasAnsweredCurrent = false;
-      const q = activeQuizQuestions[currentIndex];
-      const total = activeQuizQuestions.length;
-
-      updateStats();
-
-      // Progress
-      const progressPct = Math.round(((currentIndex + 1) / total) * 100);
-      document.getElementById('progressBar').style.width = `${progressPct}%`;
-      document.getElementById('progressText').innerText = `${String(currentIndex + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
-      document.getElementById('progressPercent').innerText = `${progressPct}%`;
-
-      // Text
-      document.getElementById('questionText').innerText = q.pregunta;
-
-      // Hide Feedback
-      const feedbackBox = document.getElementById('feedbackBox');
-      feedbackBox.className = 'hidden p-3.5 rounded-lg border text-xs font-medium';
-
-      // Next Button disabled
-      const nextBtn = document.getElementById('nextBtn');
-      nextBtn.disabled = true;
-      nextBtn.classList.add('opacity-40', 'cursor-not-allowed');
-
-      // Populate Options
-      const optionsContainer = document.getElementById('optionsContainer');
-      optionsContainer.innerHTML = '';
-      const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
-
-      q.opcions.forEach((opcioText, idx) => {
-        const btn = document.createElement('button');
-        btn.onclick = () => selectOption(idx);
-        btn.id = `opt-${idx}`;
-        btn.className = `w-full text-left p-3 rounded-lg border border-app-border bg-app-subtle hover:bg-app-card hover:border-app-borderHover transition-all flex items-start gap-3 group`;
-
-        btn.innerHTML = `
-          <span class="w-5 h-5 rounded bg-app-bg border border-app-border text-app-muted text-[11px] font-mono font-medium flex items-center justify-center shrink-0 group-hover:border-app-accent group-hover:text-app-accent transition-colors">
-            ${letters[idx] || idx + 1}
-          </span>
-          <span class="text-app-text text-xs font-normal pt-0.5 leading-relaxed">${opcioText}</span>
-        `;
-        optionsContainer.appendChild(btn);
-      });
-    }
-
-    // Handle Option Click
-    function selectOption(selectedIdx) {
-      if (hasAnsweredCurrent) return;
-      hasAnsweredCurrent = true;
-
-      const q = activeQuizQuestions[currentIndex];
-      const isCorrect = selectedIdx === q.correctaIndex;
-
-      if (isCorrect) {
-        correctCount++;
-      } else {
-        incorrectCount++;
-      }
-
-      updateStats();
-
-      // Update Option Styles
-      q.opcions.forEach((_, idx) => {
-        const btn = document.getElementById(`opt-${idx}`);
-        btn.disabled = true;
-        btn.classList.remove('hover:bg-app-card', 'hover:border-app-borderHover');
-
-        if (idx === q.correctaIndex) {
-          btn.className = `w-full text-left p-3 rounded-lg border border-app-success bg-app-success/10 text-white flex items-start gap-3`;
-        } else if (idx === selectedIdx && !isCorrect) {
-          btn.className = `w-full text-left p-3 rounded-lg border border-app-danger bg-app-danger/10 text-white flex items-start gap-3`;
-        } else {
-          btn.classList.add('opacity-40');
-        }
-      });
-
-      // Show Feedback
-      const feedbackBox = document.getElementById('feedbackBox');
-      const feedbackIcon = document.getElementById('feedbackIcon');
-      const feedbackTitle = document.getElementById('feedbackTitle');
-      const feedbackText = document.getElementById('feedbackText');
-
-      feedbackBox.classList.remove('hidden');
-
-      if (isCorrect) {
-        feedbackBox.classList.add('bg-app-success/10', 'border-app-success/30', 'text-app-success');
-        feedbackIcon.className = 'fa-solid fa-circle-check text-app-success';
-        feedbackTitle.innerText = 'Resposta Correcta';
-        feedbackText.innerText = 'Molt bé! La teva resposta és vàlida.';
-      } else {
-        feedbackBox.classList.add('bg-app-danger/10', 'border-app-danger/30', 'text-app-danger');
-        feedbackIcon.className = 'fa-solid fa-circle-xmark text-app-danger';
-        feedbackTitle.innerText = 'Resposta Incorrecta';
-        feedbackText.innerText = `L'opció correcta era: "${q.opcions[q.correctaIndex]}"`;
-      }
-
-      // Enable Next Button
-      const nextBtn = document.getElementById('nextBtn');
-      nextBtn.disabled = false;
-      nextBtn.classList.remove('opacity-40', 'cursor-not-allowed');
-    }
-
-    // Update Top Real-time Metrics
-    function updateStats() {
-      const total = activeQuizQuestions.length;
-      const answered = correctCount + incorrectCount;
-      const remaining = total - answered;
-      const accuracy = answered > 0 ? Math.round((correctCount / answered) * 100) : 0;
-      const score10 = answered > 0 ? ((correctCount / total) * 10).toFixed(1) : "0.0";
-
-      document.getElementById('statCorrect').innerText = correctCount;
-      document.getElementById('statIncorrect').innerText = incorrectCount;
-      document.getElementById('statRemaining').innerText = remaining;
-      document.getElementById('statAccuracy').innerText = `${accuracy}%`;
-      document.getElementById('statScore10').innerText = score10;
-    }
-
-    function nextQuestion() {
-      if (!hasAnsweredCurrent) return;
-
-      currentIndex++;
-      if (currentIndex < activeQuizQuestions.length) {
-        renderQuestion();
-      } else {
-        showSummary();
-      }
-    }
-
-    function showSummary() {
-      document.getElementById('quizScreen').classList.add('hidden');
-      document.getElementById('summaryScreen').classList.remove('hidden');
-
-      const total = activeQuizQuestions.length;
-      const score10 = ((correctCount / total) * 10).toFixed(1);
-      const accuracy = Math.round((correctCount / total) * 100);
-
-      document.getElementById('finalScore10').innerText = `${score10} / 10`;
-      document.getElementById('finalCorrect').innerText = correctCount;
-      document.getElementById('finalIncorrect').innerText = incorrectCount;
-      document.getElementById('finalAccuracy').innerText = `${accuracy}%`;
-
-      const msgEl = document.getElementById('finalMessage');
-      if (score10 >= 9) {
-        msgEl.innerText = "Excel·lent! Domines completament el temari.";
-      } else if (score10 >= 7) {
-        msgEl.innerText = "Molt bon resultat! Tens una gran base.";
-      } else if (score10 >= 5) {
-        msgEl.innerText = "Aprovat. Pots seguir millorant amb més pràctica.";
-      } else {
-        msgEl.innerText = "Recomanem repassar la teoria i tornar-ho a intentar.";
-      }
-    }
-
-    function goHome() {
-      document.getElementById('quizScreen').classList.add('hidden');
-      document.getElementById('summaryScreen').classList.add('hidden');
-      document.getElementById('homeScreen').classList.remove('hidden');
-      updateAllCountLabel();
-    }
-
-    // Editor Modal Functions
-    function openEditorModal() {
-      document.getElementById('jsonInput').value = JSON.stringify(questionBank, null, 2);
-      document.getElementById('jsonError').classList.add('hidden');
-      document.getElementById('editorModal').classList.remove('hidden');
-    }
-
-    function closeEditorModal() {
-      document.getElementById('editorModal').classList.add('hidden');
-    }
-
-    function handleFileUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        document.getElementById('jsonInput').value = e.target.result;
-      };
-      reader.readAsText(file);
-    }
-
-    function saveCustomQuestions() {
-      const textarea = document.getElementById('jsonInput');
-      const jsonError = document.getElementById('jsonError');
-      const jsonErrorText = document.getElementById('jsonErrorText');
-
-      try {
-        const parsed = JSON.parse(textarea.value);
-
-        if (!Array.isArray(parsed) || parsed.length === 0) {
-          throw new Error("El JSON ha de ser una llista (array) no buida.");
-        }
-
-        parsed.forEach((item, i) => {
-          if (!item.pregunta || typeof item.pregunta !== 'string') {
-            throw new Error(`La pregunta #${i + 1} no té el camp 'pregunta' vàlid.`);
-          }
-          if (!Array.isArray(item.opcions) || item.opcions.length < 2) {
-            throw new Error(`La pregunta #${i + 1} necessita almenys 2 opcions.`);
-          }
-          if (typeof item.correcta !== 'number' || item.correcta < 0 || item.correcta >= item.opcions.length) {
-            throw new Error(`La pregunta #${i + 1} té un índex 'correcta' fora de rang.`);
-          }
-        });
-
-        questionBank = parsed;
-        localStorage.setItem('dgc_minimal_quiz_data', JSON.stringify(questionBank));
-        updateAllCountLabel();
-        closeEditorModal();
-
-      } catch (err) {
-        jsonErrorText.innerText = err.message;
-        jsonError.classList.remove('hidden');
-      }
-    }
-
-    function loadDefaultQuestions() {
-      questionBank = [...DEFAULT_QUESTIONS];
-      localStorage.removeItem('dgc_minimal_quiz_data');
-      document.getElementById('jsonInput').value = JSON.stringify(DEFAULT_QUESTIONS, null, 2);
-      document.getElementById('jsonError').classList.add('hidden');
-      updateAllCountLabel();
-    }
-
-    function exportJSON() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(questionBank, null, 2));
-      const downloadAnchor = document.createElement('a');
-      downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", "teoria_dgc.json");
-      document.body.appendChild(downloadAnchor);
-      downloadAnchor.click();
-      downloadAnchor.remove();
-    }
-
-    window.onload = function() {
-      initApp();
-    };
-  </script>
-</body>
-</html>
+        "pregunta": "Quan apareixen els primers envasos de fusta imitant contenidors naturals segons la cronologia històrica
